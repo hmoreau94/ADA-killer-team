@@ -39,7 +39,7 @@ For our study, we will use the dataset “Amazon review data”. We will focus o
 We do not plan on using another dataset to enrich this one. But we might want to enrich it using amazon website and links to the product to get location data for our reviews and/or products. 
 
 # A list of internal milestones up until project milestone 2
-![](ada-milestones.pdf)
+![](ada-milestones.png)
 
 # Questions for TAs
 We wanted to have your insights on a few key points for this project :

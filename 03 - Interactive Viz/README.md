@@ -1,5 +1,9 @@
 # 03 - Interactive Viz
 
+## Notebook Viewer
+
+[Link to Jupyter Notebook Viewer](https://nbviewer.jupyter.org/github/hmoreau94/ADA-killer-team/blob/master/03%20-%20Interactive%20Viz/Homework%203%20-%20Data%20visualisation.ipynb)
+
 ## Deadline
 
 Wednesday November 8th, 2017 at 11:59PM

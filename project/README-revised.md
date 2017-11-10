@@ -25,7 +25,11 @@ For our study, we will use the dataset “Amazon review data”. We will focus o
 	* Task d : How do review change with time, do we witness a significant drop in reviews over time ?
 	* Task c : How does the usefulness of the reviews vary over time (do people rate differently in term of helpfulness the first reviews and last reviews) ?
 
-3. _Draft for the report_ : We plan here to make a website to clearly display the result of our data analysis. Nevertheless because we aren't sure yet of what type of interesting results we will have at the end we can only make assumptions and this part will most Certainly be reshaped once we gain a bit of traction on the data exploration.
+3. _(Optionnal depending on time) Suspicious reviews_:
+	* Task a : Identify the few caracteristics of reviews that can show that they could be fraudulent (same review on multiple products, highly divergent ranking compared to the rest, multiple similar reviews in a short amount of time, name of the reviewer …)
+	* Task b : See the evolution of reviews with time, categories etc.
+
+4. _Draft for the report_ : We plan here to make a website to clearly display the result of our data analysis. Nevertheless because we aren't sure yet of what type of interesting results we will have at the end we can only make assumptions and this part will most Certainly be reshaped once we gain a bit of traction on the data exploration.
 	* Task a : On the first page display the major findings about the reviews and their caracteristics (being as visual as possible)
 	* Task b : We would really like to take a few products as example to extrapolate our finding on the Herding effect to be able to give a visual representation of our findings. 
 	* Task c : Then we will try to explain how this happens on the entire dataset we considered.

@@ -20,7 +20,7 @@ def print_time(time_s,n_msec):
         return pattern % (h, m, s)
     return ('%d days, ' + pattern) % (d, h, m, s)
 
-def get_paths(category_index,DATA_FOLDER,META_FOLDER,REVIEWS_FOLDER,CATEGORIES):
+def get_paths(category_index,DATA_FOLDER,META_FOLDER,CORE_FOLDER,REVIEWS_FOLDER,CATEGORIES):
     """
     Returns the path to the meta and review file for a given category
 
@@ -33,7 +33,9 @@ def get_paths(category_index,DATA_FOLDER,META_FOLDER,REVIEWS_FOLDER,CATEGORIES):
     """
     meta_path = META_FOLDER + "meta_" + CATEGORIES[category_index] + ".json"
     review_path = REVIEWS_FOLDER + "reviews_" + CATEGORIES[category_index] + ".json"
-    return meta_path,review_path
+    core_path = CORE_FOLDER + CATEGORIES[category_index] + ".json"
+    print("Paths : \n\t meta = {}\n\t review = {}\n\t core_path = {}".format(meta_path,review_path,core_path))
+    return meta_path,review_path,core_path
 
 def get_raw_dataframe(path,max_count):
     """

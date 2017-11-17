@@ -20,7 +20,7 @@ def get_details(x,name_feature,details_dict):
 
 def fill_in_with_details(book_desc_titles,amazon_access_file_path,get_candidate,dump_path):
     start = timer()
-    complete_path_dump = dump_path + "book_only_candidates_with_details_test"
+    complete_path_dump = dump_path + "book_only_candidates_with_details"
     
     # Get the file from the dump
     if(os.path.isfile(complete_path_dump)):
@@ -50,7 +50,6 @@ def fill_in_with_details(book_desc_titles,amazon_access_file_path,get_candidate,
     error_count = 0
     retry = 0
     for idx,id_ in enumerate(list(asin_in_get_candidate)):
-        if(idx>4):break
         try:
             p = amazon.lookup(ItemId=id_)
             retry = 0

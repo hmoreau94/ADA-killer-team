@@ -6,9 +6,15 @@ import pickle
 from IPython.display import Image
 from IPython.core.display import HTML 
 from IPython.display import display
+from amazon.api import AmazonAPI
 
 # https://github.com/mattilyra/lsh
 from lsh import cache, minhash 
+
+sys.path.append('scripts/')
+from data_import import *
+from utils import *
+from amazon_api_interaction import *
 
 
 def get_shingles(document,n_grams=5):

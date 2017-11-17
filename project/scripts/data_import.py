@@ -6,19 +6,10 @@ import pickle
 import os
 import sys,itertools
 from timeit import default_timer as timer
-
-def print_time(time_s,n_msec):
-    ''' Convert seconds to 'D days, HH:MM:SS.FFF' '''
-    m, s = divmod(time_s, 60)
-    h, m = divmod(m, 60)
-    d, h = divmod(h, 24)
-    if n_msec > 0:
-        pattern = '%%02d:%%02d:%%0%d.%df' % (n_msec+3, n_msec)
-    else:
-        pattern = r'%02d:%02d:%02d'
-    if d == 0:
-        return pattern % (h, m, s)
-    return ('%d days, ' + pattern) % (d, h, m, s)
+sys.path.append('scripts/')
+from similarities import *
+from utils import *
+from amazon_api_interaction import *
 
 def get_paths(category_index,DATA_FOLDER,META_FOLDER,CORE_FOLDER,REVIEWS_FOLDER,CATEGORIES):
     """

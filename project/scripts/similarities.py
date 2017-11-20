@@ -1,21 +1,39 @@
-import itertools
-import sys
-import os
-import pickle
+import itertools,sys,os,pickle
 
 from IPython.display import Image
 from IPython.core.display import HTML 
 from IPython.display import display
-from amazon.api import AmazonAPI
 
-# https://github.com/mattilyra/lsh
-from lsh import cache, minhash 
+# externally downloaded dependencies
+try :
+    import unidecode
+except ImportError:
+    raise ImportError('Run : pip install unidecode')
 
-sys.path.append('scripts/')
+try :
+    import editdistance
+except ImportError:
+    raise ImportError('Run : pip install editdistance')
+
+try:
+    from termcolor import colored
+except ImportError:
+    raise ImportError('Run : conda install -c omnia termcolor')
+
+try :
+    from lsh import cache, minhash 
+except ImportError:
+    raise ImportError('Follow installation instruction for lsh at: https://github.com/mattilyra/lsh')
+
+
 from data_import import *
 from utils import *
 from amazon_api_interaction import *
 
+
+# =======================================================================================
+#                                     Work on raw data
+# =======================================================================================
 
 def get_shingles(document,n_grams=5):
     """
@@ -87,6 +105,8 @@ def candidate_duplicates(dataframe, dump_path, columns, char_ngram=2, seeds=100,
     for p1,p2 in list(candidate_pairs):
         if(p1 in get_candidate):
             get_candidate[p1].append(p2)
+        elif(p2 in get_candidate):
+            get_candidate[p2].append(p1)
         else:
             get_candidate[p1] = []
             get_candidate[p1].append(p2)
@@ -97,33 +117,147 @@ def candidate_duplicates(dataframe, dump_path, columns, char_ngram=2, seeds=100,
 
     return get_candidate
 
-def get_titles(asin,get_candidate, book_desc_titles):
-    """returns the titles of all the candidate duplicates of a given asin in get_candidate"""
-    title_desc_list = []
-    title_desc_list.append(book_desc_titles.loc[asin]['title'])
-    for sim in get_candidate[asin]:
-        entry = book_desc_titles.loc[sim]
-        title = entry['title']
-        title_desc_list.append(title)
-    return title_desc_list
+# =======================================================================================
+#                                     Work on authors
+# =======================================================================================
 
-def get_desc(asin,get_candidate, book_desc_titles):
-    """returns the description of all the candidate duplicates of a given asin in get_candidate"""
-    title_desc_list = []
-    title_desc_list.append(book_desc_titles.loc[asin]['description'])
-    for sim in get_candidate[asin]:
-        entry = book_desc_titles.loc[sim]
-        desc = entry['description']
-        title_desc_list.append(desc)
-    return title_desc_list
+def clean_name(x):
+    """Will clean the names of the authors, by performing the actions described below
+    
+    @params:
+    - x : the string to clean
+    """
+    # get small latters
+    x = x.lower()
+    
+    # delete accents
+    x = unidecode.unidecode(x)
+    
+    # delete any space before or after string
+    return x.strip()
 
-def display_images(asin,get_candidate, book_desc_titles):
-    """Display the images of the candidate duplicates of a given asin in get_candidate"""
-    url_list = []
-    url_list.append(book_desc_titles.loc[asin]['imUrl'])
-    for sim in get_candidate[asin]:
-        entry = book_desc_titles.loc[sim]
-        url = entry['imUrl']
-        url_list.append(url)
-    for link in url_list:
-        display(Image(url=link))
+def clean_name_in_dataframe(author_list):
+    """ Cleans all the names in the author list of a given entry of our dataframe
+    
+    Rk : we also witnessed examples where authors names 
+    """
+    if(len(author_list) == 0):
+        return []
+    else:
+        cleaned_authors = []
+        for a in author_list:
+            cleaned_authors.append(clean_name(a))
+        return cleaned_authors        
+
+def check_details_similarities(p_details,c_details,threshold,observational_print=False):
+    """This function will try to find books that have the same authors"""
+    p_authors = p_details['authors']
+    c_authors = c_details['authors']
+    if (p_authors == None or c_authors == None):
+        return False
+    if (len(p_authors) > 0 and len(c_authors) > 0):
+        # We do have author lists that are both not empty
+        return check_name_similarity(p_authors,c_authors,threshold,observational_print)
+
+def check_name_similarity(authors1,authors2,threshold,observational_print=False):
+    """
+    Will check the similarity between two lists of authors. It uses the Levenstein distance made relative.
+    It will look in the two lists what are the most probable matches (it looks at the match that minimises the metric describe below)
+
+    Relative Levenstein = levenstein / maximum length between the two author names.
+    Levenstein distance = number of edits to go from one string to another.
+
+    @params:
+    - authors1/2 = the two list of authors we whish to compare
+    - threshold = the threshold under which we consider the levenstein distance to have found similar strings
+    - observational_print = used to fine tune the proper threshold, it will print all the cases where the 
+    threshold would have needed to be 25% higher to accept
+
+    @returns:
+    a boolean stating wether the two list can be considered similar.
+    """
+    # We take the longest list
+    longuest,shortest = [authors1[:],authors2[:]] if (len(authors1) > len(authors2)) else [authors2[:],authors1[:]]
+    # authors1[:] to copy them so that the remove later on doesn't affect the original list
+    matched = []
+    to_match_idx = 0
+    while(len(shortest)>0 and to_match_idx < len(longuest)):
+        distances = []
+        to_match = longuest[to_match_idx]
+        for a in shortest:
+            # We make it relative so that we can use the same threshold for all strings
+            max_length = len(to_match) if len(to_match) > len(a) else len(a)
+            distances.append(editdistance.eval(to_match,a)/max_length)
+        max_score_idx = np.argmin(distances)
+        max_score = distances[max_score_idx]
+        max_match = shortest[max_score_idx]
+        matched.append((to_match,max_match,max_score))
+        
+        shortest.remove(max_match)
+        to_match_idx += 1
+        
+    # now we have a list containing the matching of author names based on the max 
+    # similarity scores. We decide to ignore the author names that are remaining 
+    # (if they have more authors it could be that the first book didn't 
+    # provide an exhaustive list of all authors)
+    mean_score = np.mean([score for _,_,score in matched])
+    are_similar = mean_score <= threshold
+    if(observational_print and not are_similar and mean_score <= threshold*(1.25)):
+        print("Not similar : {}".format(matched))
+       
+    return are_similar
+
+def find_similarity_set(tuple,all_sets):
+    for i,l in enumerate(all_sets):
+        if(tuple[0] in l or tuple[1] in l):
+            return i
+    return -1
+
+def get_similar_authors(book_only_candidates,get_candidate,threshold=0.35):
+    """
+    Looking at the candidate similar in get_candidate it will use the info in the dataframe book_only_candidates
+    in order to determine if the authors are similar enough.
+    """
+    similars = []
+    for primary in list(get_candidate.keys()):
+        primary_details = book_only_candidates.loc[primary]
+        candidates = get_candidate[primary]
+        for c in candidates:
+            candidate_details = book_only_candidates.loc[c]
+            if(check_details_similarities(primary_details,candidate_details,threshold)):
+                idx = find_similarity_set([primary,c],similars)
+                if(idx == -1):
+                    similars.append(set([primary,c]))
+                else:
+                    similars[idx].update([primary,c])
+    similars = [sorted(list(s)) for s in similars]
+    similars = {elements[0]:elements[1:] for elements in similars}
+
+    return similars
+
+# =======================================================================================
+#                                     Work on titles
+# =======================================================================================
+def get_similar_titles(book_only_candidates,similars,observational_print=False):
+    very_similars = []
+    for primary in list(similars.keys()):
+        p_title = book_only_candidates.loc[primary]['title']
+        candidates = similars[primary]
+
+        for c in candidates:
+            c_title = book_only_candidates.loc[c]['title']
+            dp,dc = get_difference(p_title,c_title)
+
+            if(observational_print and len(dp)>0 and len(dc)>0):
+                print("'{}'\n'{}'\n\t".format(p_title,c_title), colored("--->'{}','{}'".format(dp,dc),'red'))
+            if(len(dp) == 0 and len(dc) == 0):
+                # Insert the match in our list
+                idx = find_similarity_set([primary,c],very_similars)
+                if(idx == -1):
+                    very_similars.append(set([primary,c]))
+                else:
+                    very_similars[idx].update([primary,c])
+    very_similars = [sorted(list(s)) for s in very_similars]
+    very_similars = {elements[0]:elements[1:] for elements in very_similars}
+    return very_similars
+        

@@ -1,12 +1,8 @@
 import pandas as pd
 import numpy as np
-import re
-import html
-import pickle
-import os
-import sys,itertools
 from timeit import default_timer as timer
-sys.path.append('scripts/')
+import re,html,pickle,os,sys,itertools
+
 from similarities import *
 from utils import *
 from amazon_api_interaction import *

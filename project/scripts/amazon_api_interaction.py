@@ -1,34 +1,38 @@
-from amazon.api import AmazonAPI
-import sys
+import sys,os,time,random,pickle
 from timeit import default_timer as timer
-import pickle
 import pandas as pd
 import numpy as np
-import os
 
-sys.path.append('scripts/')
+try:
+    from amazon.api import AmazonAPI
+except ImportError:
+    raise ImportError('Run : pip install python-amazon-simple-product-api')
+
 from data_import import *
 from similarities import *
 from utils import *
 
 def get_details(x,name_feature,details_dict):
-    details = details_dict.get(x['asin']) 
+    details = details_dict.get(x.name) 
     if(details):
         return details.get(name_feature)
     else:
-        return None
+        return np.nan
 
 def fill_in_with_details(book_desc_titles,amazon_access_file_path,get_candidate,dump_path):
     start = timer()
     complete_path_dump = dump_path + "book_only_candidates_with_details"
+    complete_path_failed = dump_path + "api_failed"
     
     # Get the file from the dump
     if(os.path.isfile(complete_path_dump)):
-        print("Retrieving from : {}".format(complete_path_dump))
-        df = pd.read_pickle(complete_path_dump)
-        end = timer()
-        print("It took {} to get the data.".format(print_time(end - start,3)))
-        return df
+        if(os.path.isfile(complete_path_failed)):
+            print("Retrieving from : \n\t{}\n\t{} ".format(complete_path_dump,complete_path_failed))
+            df = pd.read_pickle(complete_path_dump)
+            failed_list = pickle.load(open(complete_path_failed, "rb"))
+            end = timer()
+            print("It took {} to get the data.".format(print_time(end - start,3)))
+            return df,failed_list
     
     asin_in_get_candidate = list(get_candidate.keys())
     for id_ in get_candidate.keys():
@@ -42,28 +46,31 @@ def fill_in_with_details(book_desc_titles,amazon_access_file_path,get_candidate,
     amazon = AmazonAPI(Access_key_ID, Secret_access_key, Associat_tag, Region ='FR', MaxQPS=0.9)
 
     # We create a dataframe that only contains those products
-    book_only_candidates = book_desc_titles.reset_index()
-    book_only_candidates = book_only_candidates[book_only_candidates['asin'].isin(asin_in_get_candidate)]
-    book_only_candidates.head()
+    book_only_candidates = book_desc_titles[book_desc_titles.index.isin(asin_in_get_candidate)]
 
     details_dict = {}
+    failed = []
     error_count = 0
-    retry = 0
     for idx,id_ in enumerate(list(asin_in_get_candidate)):
-        try:
-            p = amazon.lookup(ItemId=id_)
-            retry = 0
-        except:
-            # Most probably we are limited by the API in the number of requests
-            error_count += 1
-            if(retry > 0):
-                # Exponential backoff, 1 sec is not enough 
-                time.sleep(random.expovariate(0.1))
-                retry = 0
-            else:
-                retry += 1
+        for attempt in range(100):
+            try:
+                p = amazon.lookup(ItemId=id_)
+            except AsinNotFound :
+                # The item was not found by the API
+                failed.append(id_)
+                break 
+            except:
+                # Most probably we are limited by the API in the number of requests
+                error_count += 1
                 time.sleep(1)
-            continue
+                continue
+            else:
+                # We have successfully retrieved the info
+                break
+        else:
+            # We have failed all the attemps
+            failed.append(id_)
+        # Get the details
         details = { 'authors':p.authors,
                     'isbn':p.isbn,
                     'eisbn':p.eisbn,
@@ -75,18 +82,20 @@ def fill_in_with_details(book_desc_titles,amazon_access_file_path,get_candidate,
         progress(idx+1,total_entries,"Fetching from API (exceptions : {})".format(error_count))
     
     #Then we fill in the details in the dataframe
-    book_only_candidates['authors'] = book_only_candidates.reset_index().apply(lambda x : get_details(x,'authors',details_dict),axis=1)
-    book_only_candidates['isbn'] = book_only_candidates.reset_index().apply(lambda x : get_details(x,'isbn',details_dict),axis=1)
-    book_only_candidates['eisbn'] = book_only_candidates.reset_index().apply(lambda x : get_details(x,'eisbn',details_dict),axis=1)
-    book_only_candidates['brand'] = book_only_candidates.reset_index().apply(lambda x : get_details(x,'brand',details_dict),axis=1)
-    book_only_candidates['edition'] = book_only_candidates.reset_index().apply(lambda x : get_details(x,'edition',details_dict),axis=1)
-    book_only_candidates['publisher'] = book_only_candidates.reset_index().apply(lambda x : get_details(x,'publisher',details_dict),axis=1)
+    book_only_candidates['authors'] = book_only_candidates.apply(lambda x : get_details(x,'authors',details_dict),axis=1)
+    book_only_candidates['isbn'] = book_only_candidates.apply(lambda x : get_details(x,'isbn',details_dict),axis=1)
+    book_only_candidates['eisbn'] = book_only_candidates.apply(lambda x : get_details(x,'eisbn',details_dict),axis=1)
+    book_only_candidates['brand'] = book_only_candidates.apply(lambda x : get_details(x,'brand',details_dict),axis=1)
+    book_only_candidates['edition'] = book_only_candidates.apply(lambda x : get_details(x,'edition',details_dict),axis=1)
+    book_only_candidates['publisher'] = book_only_candidates.apply(lambda x : get_details(x,'publisher',details_dict),axis=1)
     
     end = timer()
     print("\nIt took {} to import the data.".format(print_time(end - start,3)))
     
     # We serialize it using pickle so that we do not have to download it again
     book_only_candidates.to_pickle(complete_path_dump)
-    print("Saved at : {}".format(complete_path_dump))
+    pickle.dump(failed, open(complete_path_failed, "wb"))
+    print("Saved at : \n\t{}\n\t".format(complete_path_dump,complete_path_failed))
+    print("{} failed retrieval(s) (check the returned list for more details)".format(len(failed)))
     
-    return book_only_candidates
+    return book_only_candidates,failed

@@ -260,4 +260,36 @@ def get_similar_titles(book_only_candidates,similars,observational_print=False):
     very_similars = [sorted(list(s)) for s in very_similars]
     very_similars = {elements[0]:elements[1:] for elements in very_similars}
     return very_similars
+
+def clean_title(x):
+    """Will clean the titles
+    
+    @params:
+    - x : the string to clean
+    """
+    x = x.lower() # get small letters
+    x = unidecode.unidecode(x) # delete accents
+    x = re.sub("[()]","",x) # delete parenthesis
+    x = re.sub(r"(\s)\-(\s)", r"\1 \2",x) # dash between two spaces replace by nothing
+    x = re.sub(r"([a-z]|[\d])\-([a-z]|[\d])", r"\1 \2",x) # dash between two strings replace by space 
+    x = re.sub("[^(\w|\s)]","",x) # delete anything that isn't alphanumerical or a space
+    
+    # delete any space before or after string
+    return x.strip()
+
+def get_difference(s1,s2):
+    """ 
+    Will give the difference between two strings. 
+    Returns the two strings where have been 
+    deleted common words.
+    
+    @params:
+    - s1,s2 : the two strings that we wish to compare
+    
+    """
+    d1 = set([w for w in s1.split() if w not in s2])
+    d2 = set([w for w in s2.split() if w not in s1])
+    return " ".join(d1)," ".join(d2)
+
+
         

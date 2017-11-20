@@ -2,7 +2,7 @@ import sys
 
 from data_import import *
 from similarities import *
-from amazon_api_interaction import *
+from amazon_api_interaction import print_time
 
 
 def print_details(asin,similars,book_only_candidates):

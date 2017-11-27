@@ -26,6 +26,7 @@ except ImportError:
     raise ImportError('Follow installation instruction for lsh at: https://github.com/mattilyra/lsh')
 
 
+sys.path.append('scripts/')
 from data_import import *
 from utils import *
 from amazon_api_interaction import *

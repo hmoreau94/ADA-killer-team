@@ -1,8 +1,9 @@
 import sys
 
+sys.path.append('scripts/')
 from data_import import *
 from similarities import *
-from amazon_api_interaction import print_time
+from amazon_api_interaction import *
 
 
 def print_details(asin,similars,book_only_candidates):

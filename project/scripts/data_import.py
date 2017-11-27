@@ -3,6 +3,7 @@ import numpy as np
 from timeit import default_timer as timer
 import re,html,pickle,os,sys,itertools
 
+sys.path.append('scripts/')
 from similarities import *
 from utils import *
 from amazon_api_interaction import *

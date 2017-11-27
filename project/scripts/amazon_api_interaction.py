@@ -8,6 +8,7 @@ try:
 except ImportError:
     raise ImportError('Run : pip install python-amazon-simple-product-api')
 
+sys.path.append('scripts/')
 from data_import import *
 from similarities import *
 from utils import *

@@ -14,6 +14,15 @@ from similarities import *
 from utils import *
 
 def get_details(x,name_feature,details_dict):
+    """
+    Returns the detail 'name_feature' stored in the dictionnary itself stored in details_dict.
+    In case of failure it will return np.nan
+
+    @params:
+    - x a dataframe serie which name attribut corresponds to the key of details_dict
+    - name_feature is the name of the detail feature we want to obtain for x
+    - details_dict is a dictionnary containing ASINs as keys and detail dictionnaries as values
+    """
     details = details_dict.get(x.name) 
     if(details):
         return details.get(name_feature)
@@ -21,6 +30,17 @@ def get_details(x,name_feature,details_dict):
         return np.nan
 
 def fill_in_with_details(book_desc_titles,amazon_access_file_path,get_candidate,dump_path):
+    """
+    Will return the extra details that can be fetched fromn the amazon API for all the rows in book_desc_titles.
+    It will not call the API if there is already a dump of this operation (to avoid calling it too often)
+
+    @params:
+    - book_desc_titles : a dataframe which contains all books of interest with the information we decided to keep from the dataset after the first import.
+    - amazon_access_file_path : the path to a pickled version of the amazon access credition
+    - get_candidate : a dictionnaery associating book asins to a list of asins which books are candidate similars
+    - dump_path : the path to the folder where the dump should be saved
+    """
+
     start = timer()
     complete_path_dump = dump_path + "book_only_candidates_with_details"
     complete_path_failed = dump_path + "api_failed"

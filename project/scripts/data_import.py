@@ -12,7 +12,7 @@ def get_paths(category_index,DATA_FOLDER,META_FOLDER,CORE_FOLDER,REVIEWS_FOLDER,
     """
     Returns the path to the meta and review file for a given category
 
-    params:
+    @params:
     - category_index : the index of the category in the CATEGORIES list
     - DATA_FOLDER : path of the folder to the data
     - META_FOLDER : the name of the folder containing the metadata
@@ -29,6 +29,11 @@ def get_raw_dataframe(path,max_count):
     """
     Used to explore the data without any prior processing of the json, 
     it will simply aggregate the rows of the JSON to form a dataframe
+
+    @params:
+    - path : the path toward the JSON that we wish to read
+    - max_count : the maximum amount of lines of the JSON we wish to read (this is useful because if we wish to simply 
+    explore the content of file then we do not need to read it entirely)
     """
     with open(path) as f:
         count = 0
@@ -44,6 +49,13 @@ def get_raw_dataframe(path,max_count):
         return df
 
 def clean_category_name(cat):
+    """
+    When we have multiple categories they are separated by '+' and we replace that by '_'.
+    We also get rid of the special html characters
+
+    @params:
+    - cat : the category name to be cleaned
+    """
     cleaned = html.unescape(str(cat))
     cleaned = re.sub(' +','_',cleaned)
     return cleaned
@@ -53,7 +65,7 @@ def handle_format(column_name,line,row):
     Given a line of the JSON it will extract the value of the column column_name 
     into the correct format and will yield a NaN if the value isn't in the line
     
-    params:
+    @params:
     - column_name : the column for which we wish to have the attribute
     - line : dictionnary extracted from the JSON line
     - row : the dictionnary to which we wish to save the value

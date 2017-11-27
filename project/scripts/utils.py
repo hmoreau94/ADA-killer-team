@@ -74,7 +74,12 @@ def display_images(asin,get_candidate, book_desc_titles):
         display(Image(url=link))
 
 def print_time(time_s,n_msec):
-    ''' Convert seconds to 'D days, HH:MM:SS.FFF' '''
+    ''' Convert seconds to 'D days, HH:MM:SS.FFF' 
+    
+    @params:
+    - time_s : the time to print in seconds
+    - n_msec : the number of msec we want to display
+    '''
     m, s = divmod(time_s, 60)
     h, m = divmod(m, 60)
     d, h = divmod(h, 24)

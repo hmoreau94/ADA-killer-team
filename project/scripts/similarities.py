@@ -26,7 +26,7 @@ except ImportError:
     raise ImportError('Follow installation instruction for lsh at: https://github.com/mattilyra/lsh')
 
 
-sys.path.append('scripts/')
+sys.path.append('scripts/') 
 from data_import import *
 from utils import *
 from amazon_api_interaction import *
@@ -39,6 +39,10 @@ from amazon_api_interaction import *
 def get_shingles(document,n_grams=5):
     """
     Returns the list of all n_grams that are in the document.
+
+    @params:
+    - document : the string representing the document
+    - n_grams : the number of characters to be grouped together in our n_grams
     """
     return [document[head:head + n_grams] for head in range(0, len(document) - n_grams)]
 
@@ -47,13 +51,22 @@ def jaccard_dist(text1,text2):
     """
     Computes the jaccard distance between two lists.
     It is equal to the size of the intersection divided by size of the union
+
+    @params:
+    - text1,text2 : the two strings to compare
     """
     return len(set(text1) & set(text2)) / len(set(text1) | set(text2))
 
 def get_fingerprint(x,hasher,lshcache,columns):
     """
-    Will compute the fingerprint for the given entry based on the columns 
+    Will compute the fingerprint for the given entry based on the columns  
     we wish to use to create the description to be fingerprinted and save it in the lhscache
+
+    @params:
+    - x : the entry that for which we whish to obtain the fingerprint (where 'asin' is one of the column)
+    - hasher : the hasher instance to use to compute the minhashes
+    - lshcache : a cache instance to store the fingerprint
+    - columns : the columns to use in the string on whish we will compute the fingerprint (e.g. ['title','description'])
     """
     fgprt = []
     for c in columns:
@@ -65,7 +78,14 @@ def get_fingerprint(x,hasher,lshcache,columns):
 
 def candidate_duplicates(dataframe, dump_path, columns, char_ngram=2, seeds=100, bands=5, hashbytes=4):
     """
-    Will compute the candidate duplicates from the passed dataframe
+    Will compute the candidate duplicates from the passed dataframe.
+
+    @params :
+    - dataframe : the dataframe containing all the infos about books
+    - dump_path : the path to the folder where the the result should be dumped or fetched if it already exists
+    - char_ngram : the size of n-grams.
+    - seeds : the number of minhashes that compose a document
+    - bands : number of parts that divide each minhash
     """
     description_dump = [c for c in columns]
     description_dump += [str(x) for x in [char_ngram,seeds,bands,hashbytes]]
@@ -139,8 +159,9 @@ def clean_name(x):
 
 def clean_name_in_dataframe(author_list):
     """ Cleans all the names in the author list of a given entry of our dataframe
-    
-    Rk : we also witnessed examples where authors names 
+
+    @params:
+    - the list of authors we wish to clean
     """
     if(len(author_list) == 0):
         return []
@@ -151,7 +172,15 @@ def clean_name_in_dataframe(author_list):
         return cleaned_authors        
 
 def check_details_similarities(p_details,c_details,threshold,observational_print=False):
-    """This function will try to find books that have the same authors"""
+    """
+    This function will try to find books that have the same authors based on the argument threshold
+
+    @params:
+    - p_details : the serie of details of the primary book
+    - c_details : the serie of details of the candidate similar book
+    - threshold : the threshold of the relative Levenstein distance under which books are considered similar
+    - observational_print : allows to look at how the authors are compared. (see check_name_similarity for more details)
+    """
     p_authors = p_details['authors']
     c_authors = c_details['authors']
     if (p_authors == None or c_authors == None):
@@ -209,6 +238,13 @@ def check_name_similarity(authors1,authors2,threshold,observational_print=False)
     return are_similar
 
 def find_similarity_set(tuple,all_sets):
+    """
+    Check if one of the component of tupe isn't already in the all_sets dictionnary
+
+    @params:
+    - tuple : a pair of ASIN
+    - all_sets : the existing sets of similar books
+    """
     for i,l in enumerate(all_sets):
         if(tuple[0] in l or tuple[1] in l):
             return i
@@ -218,6 +254,11 @@ def get_similar_authors(book_only_candidates,get_candidate,threshold=0.35):
     """
     Looking at the candidate similar in get_candidate it will use the info in the dataframe book_only_candidates
     in order to determine if the authors are similar enough.
+
+    @params:
+    - book_only_candidates : the dataframe containing all the books details only for books that are in get_candidate
+    - get_candidate : a dictionnary that assigns to a primary ASIN all its candidate similars. It should be constructed 
+    such that each book appears only once has a key or a value
     """
     similars = []
     for primary in list(get_candidate.keys()):
@@ -240,6 +281,16 @@ def get_similar_authors(book_only_candidates,get_candidate,threshold=0.35):
 #                                     Work on titles
 # =======================================================================================
 def get_similar_titles(book_only_candidates,similars,observational_print=False):
+    """
+    Will return a dictionnary which gives a correspondance to an ASIN and all the ASIN that are similar.
+    It was designed such that an ASIN will appear only once as a key or a value. 
+
+    @params :
+    - book_only_candidates : a dataframe containing the book information 
+        (both from the dataset and the API) that have at least one similar book.
+    - similars : the correspondance from ASIN to the list of ASIN that are similar
+    - Observational_print : can be set to True if once need to see how the method works
+    """
     very_similars = []
     for primary in list(similars.keys()):
         p_title = book_only_candidates.loc[primary]['title']
@@ -250,6 +301,7 @@ def get_similar_titles(book_only_candidates,similars,observational_print=False):
             dp,dc = get_difference(p_title,c_title)
 
             if(observational_print and len(dp)>0 and len(dc)>0):
+                # Non empty difference, after cleaning the titles are still different
                 print("'{}'\n'{}'\n\t".format(p_title,c_title), colored("--->'{}','{}'".format(dp,dc),'red'))
             if(len(dp) == 0 and len(dc) == 0):
                 # Insert the match in our list

@@ -344,7 +344,7 @@ def plot_lastreviews_means_and_errors(H_in_HL_mean, H_in_HL_error, L_in_HL_mean,
 
 
     # set titles
-    ax.set_title('20+ reviews average rating for each case in each group', fontsize = 14)
+    ax.set_title('10+ reviews average rating for each case in each group', fontsize = 14)
 
     plt.ylim([1,5.1])
     plt.xlim([0,5.1])

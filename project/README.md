@@ -53,7 +53,10 @@ We decided to modularize the code as much as possible to improve readability and
 	- ```data_import.py```: functions used to read the large JSON of the original dataset and import it in dataframes.
 	- ```similarities.py``` : functions used to isolate similar books split in three phases (work on raw data, refining using the authors and finally how we can keep only the similar books using their normalized titles)
 	- ```utils.py```: functions used mainly for details purposes (printing time, printing the details of books : titles, description, images and also to display the progress of the code)
+	- ```analysis.py```: methods used to realize the herding effect analysis.
 	- ```__init.py__```: used to be able to tell to python that this folder contains modules that can be imported (it is actually an empty file)
+* ```analysis_data/```: contains the serialized version of the data used to conduct the analysis of the correlation between price/sales rank and reviews but also for the analysis of the herding effect
+
 *  ```report/```: for now it is simply the empty shell of a potential report that could be used to later synthesise our work.
 
 # References

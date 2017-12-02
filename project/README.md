@@ -35,7 +35,10 @@ We would like to emphasize to a potential reader that we have for now decided to
 We decided to use first all the data available from the amazon dataset. Then because we lacked some important details we decided to extend this data with amazon API using the ASINs of products that have already been selected as similars (to reduce the number of API requests that are being done)
 
 # A list of internal milestones up until project milestone 2
-![](ada-milestones.pdf)
+
+<p align="center">
+  <img src="ada-milestones.png" width="750"/>
+</p>
 
 # Running
 Running the notebooks will highlight which import must be perform and display in the body of the ```Import Error``` how those can be installed (using ```pip``` when possible). 

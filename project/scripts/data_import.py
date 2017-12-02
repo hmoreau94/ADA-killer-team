@@ -3,10 +3,11 @@ import numpy as np
 from timeit import default_timer as timer
 import re,html,pickle,os,sys,itertools
 
-sys.path.append('scripts/')
-from similarities import *
-from utils import *
-from amazon_api_interaction import *
+from scripts.similarities import *
+from scripts.amazon_api_interaction import *
+from scripts.analysis import *
+from scripts.utils_project import *
+
 
 def get_paths(category_index,DATA_FOLDER,META_FOLDER,CORE_FOLDER,REVIEWS_FOLDER,CATEGORIES):
     """
@@ -130,7 +131,7 @@ def import_interesting_cols(path,dump_folder_path,isMeta,interesting_cols=[],max
         print("Retrieving from : {}".format(complete_path_dump))
         df = pd.read_pickle(complete_path_dump)
         end = timer()
-        print("It took {} to import the data.".format(print_time(end - start,3)))
+        print("It took {} to import the data.".format(human_readible_time(end - start,3)))
         return df
 
     if(isMeta):
@@ -179,7 +180,7 @@ def import_interesting_cols(path,dump_folder_path,isMeta,interesting_cols=[],max
             df = df.dropna(how='any')
 
         end = timer()
-        print("It took {} to import the data.".format(print_time(end - start,3)))
+        print("It took {} to import the data.".format(human_readible_time(end - start,3)))
 
         # We serialize it using pickle so that we do not have to download it again
         df.to_pickle(complete_path_dump)

@@ -26,10 +26,11 @@ except ImportError:
     raise ImportError('Follow installation instruction for lsh at: https://github.com/mattilyra/lsh')
 
 
-sys.path.append('scripts/') 
-from data_import import *
-from utils import *
-from amazon_api_interaction import *
+from scripts.amazon_api_interaction import *
+from scripts.analysis import *
+from scripts.data_import import *
+from scripts.utils_project import *
+
 
 
 # =======================================================================================
@@ -96,7 +97,10 @@ def candidate_duplicates(dataframe, dump_path, columns, char_ngram=2, seeds=100,
         # Getting from backup
         print("Retrieving from : {}".format(dump_path))
         get_candidate = pickle.load(open(dump_path, "rb"))
-        print("Found {} items with possible duplicates.".format(len(get_candidate)))
+        asin_in_get_candidate = set(get_candidate.keys())
+        for key in get_candidate.keys():
+            asin_in_get_candidate.update(get_candidate[key]) 
+        print("Found {} bins of possible duplicates.\nWith {} different books".format(len(get_candidate),len(list(asin_in_get_candidate))))
         return get_candidate
 
 
@@ -121,17 +125,18 @@ def candidate_duplicates(dataframe, dump_path, columns, char_ngram=2, seeds=100,
     sys.stdout.write('Done...\r')
     sys.stdout.flush()
 
-    # We then create a dictionnary that yields a list of asin that are similar to the key asin
-    get_candidate = {}
+    similars = []
+    asins_in_similar = set()
     for p1,p2 in list(candidate_pairs):
-        if(p1 in get_candidate):
-            get_candidate[p1].append(p2)
-        elif(p2 in get_candidate):
-            get_candidate[p2].append(p1)
+        idx = find_similarity_set([p1,p2],similars)
+        if(idx == -1):
+            similars.append(set([p1,p2]))
         else:
-            get_candidate[p1] = []
-            get_candidate[p1].append(p2)
-    print("Found {} items with possible duplicates.".format(len(get_candidate)))
+            similars[idx].update([p1,p2])
+        asins_in_similar.update([p1,p2])
+    similars = [sorted(list(s)) for s in similars]
+    get_candidate = {elements[0]:elements[1:] for elements in similars}
+    print("Found {} bins of possible duplicates.\nWith {} different books".format(len(get_candidate),len(asins_in_similar)))
 
     # Saving to backup
     pickle.dump(get_candidate, open(dump_path, "wb"))
@@ -239,7 +244,7 @@ def check_name_similarity(authors1,authors2,threshold,observational_print=False)
 
 def find_similarity_set(tuple,all_sets):
     """
-    Check if one of the component of tupe isn't already in the all_sets dictionnary
+    Check if one of the component of tuple isn't already in the all_sets dictionnary
 
     @params:
     - tuple : a pair of ASIN
@@ -250,7 +255,7 @@ def find_similarity_set(tuple,all_sets):
             return i
     return -1
 
-def get_similar_authors(book_only_candidates,get_candidate,threshold=0.35):
+def get_similar_authors(book_only_candidates,get_candidate,threshold=0.35,observational_print=False):
     """
     Looking at the candidate similar in get_candidate it will use the info in the dataframe book_only_candidates
     in order to determine if the authors are similar enough.
@@ -266,7 +271,7 @@ def get_similar_authors(book_only_candidates,get_candidate,threshold=0.35):
         candidates = get_candidate[primary]
         for c in candidates:
             candidate_details = book_only_candidates.loc[c]
-            if(check_details_similarities(primary_details,candidate_details,threshold)):
+            if(check_details_similarities(primary_details,candidate_details,threshold,observational_print)):
                 idx = find_similarity_set([primary,c],similars)
                 if(idx == -1):
                     similars.append(set([primary,c]))

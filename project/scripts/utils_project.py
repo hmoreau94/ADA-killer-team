@@ -35,6 +35,7 @@ def get_titles(asin,get_candidate,book_desc_titles):
     - book_desc_titles : a dataframe containing the information relative to the different ASINs
     """
     title_desc_list = []
+    book_desc_titles = book_desc_titles.reset_index(drop=True).set_index('asin')
     title_desc_list.append(book_desc_titles.loc[asin]['title'])
     for sim in get_candidate[asin]:
         entry = book_desc_titles.loc[sim]
@@ -51,6 +52,7 @@ def get_desc(asin,get_candidate, book_desc_titles):
     - book_desc_titles : a dataframe containing the information relative to the different ASINs
     """
     title_desc_list = []
+    book_desc_titles = book_desc_titles.reset_index(drop=True).set_index('asin')
     title_desc_list.append(book_desc_titles.loc[asin]['description'])
     for sim in get_candidate[asin]:
         entry = book_desc_titles.loc[sim]
@@ -67,13 +69,14 @@ def display_images(asin,get_candidate, book_desc_titles):
     - book_desc_titles : a dataframe containing the information relative to the different ASINs
     """
     url_list = []
+    book_desc_titles = book_desc_titles.reset_index(drop=True).set_index('asin')
     url_list.append(book_desc_titles.loc[asin]['imUrl'])
     for sim in get_candidate[asin]:
         entry = book_desc_titles.loc[sim]
         url = entry['imUrl']
         url_list.append(url)
     for link in url_list:
-        display(Image(url=link))
+        display(Image(url=link,width=250, height=500))
 
 def human_readible_time(time_s,n_msec):
     ''' Convert seconds to 'D days, HH:MM:SS.FFF' 

@@ -374,3 +374,85 @@ def plot_lastreviews_means_and_errors(H_in_HL_mean, H_in_HL_error, L_in_HL_mean,
     plt.ylim([4,4.6])
     plt.xlim([0.5,5.5])
     plt.show()
+
+def plot_lastreviews_means_and_errors_scaled(H_in_HH_mean, H_in_HH_error, M_in_MM_mean, M_in_MM_error, L_in_LL_mean, L_in_LL_error,
+                                             H_in_HL_mean, H_in_HL_error, L_in_HL_mean, L_in_HL_error, H_in_HM_mean, H_in_HM_error,
+                                             M_in_HM_mean, M_in_HM_error, M_in_ML_mean, M_in_ML_error, L_in_ML_mean, L_in_ML_error):
+    """
+        plot the errorplot with each longterm ratings mean.
+        @params:
+        - H_in_HL_mean: the mean value for the specified category
+        - H_in_HL_error: the error value for the specified category.
+        - L_in_HL_mean: the mean value for the specified category
+        - L_in_HL_error: the error value for the specified category.
+        - H_in_HH_mean: the mean value for the specified category
+        - H_in_HH_error: the error value for the specified category.
+        - H_in_HM_mean: the mean value for the specified category
+        - H_in_HM_error: the error value for the specified category.
+        - M_in_HM_mean: the mean value for the specified category
+        - M_in_HM_error: the error value for the specified category.
+    """
+    plt.figure(figsize=(12, 9))   
+
+    # create the fig. and axes.
+    ax = plt.subplot(111)
+    ax.spines["top"].set_visible(False)       
+    ax.spines["right"].set_visible(False)
+
+    # define the color to use
+    light_green = (152, 223, 138)
+    strong_green = (44, 160, 44)
+    light_red =  (255, 152, 150)
+    orange = (255, 187, 120)
+    strong_red = (214, 39, 40)
+
+    strong_green = rgb_to_matplot_lib(strong_green)
+    light_green = rgb_to_matplot_lib(light_green)
+    strong_red = rgb_to_matplot_lib(strong_red)
+    light_red = rgb_to_matplot_lib(light_red)
+    orange = rgb_to_matplot_lib(orange)
+
+    # axis 
+    ax.set_ylabel('Rating', fontsize = 14)
+    ax.tick_params(axis='both', labelsize=14)
+
+    # plot small dash lines to follow the grading   
+    for y in np.arange(3.5, 4.6, 0.1):    
+        ax.plot(range(0, 45), [y] * len(range(0, 45)), "--", lw=0.5, color="black", alpha=0.3)
+
+
+    # set titles
+    ax.set_title('10+ reviews average rating for each case in each group', fontsize = 14)
+
+    plt.errorbar(1, H_in_HH_mean, H_in_HH_error, lineStyle= None, capsize=5, marker="^", color=strong_green)
+    plt.errorbar(2, M_in_MM_mean, M_in_MM_error, lineStyle= None, capsize=5, marker="^", color=orange)
+    plt.errorbar(3, L_in_LL_mean, L_in_LL_error, lineStyle= None, capsize=5, marker="^", color=strong_red)
+    plt.errorbar(4, H_in_HL_mean, H_in_HL_error, lineStyle= None, capsize=5, marker="^", color=light_green)
+    plt.errorbar(5, L_in_HL_mean, L_in_HL_error, lineStyle= None, capsize=5, marker="^", color=light_red)
+    plt.errorbar(6, H_in_HM_mean, H_in_HM_error, lineStyle= None, capsize=5, marker="^", color=light_green)
+    plt.errorbar(7, M_in_HM_mean, M_in_HM_error, lineStyle= None, capsize=5, marker="^", color=orange)
+    plt.errorbar(8, M_in_ML_mean, M_in_ML_error, lineStyle= None, capsize=5, marker="^", color=orange)
+    plt.errorbar(9, L_in_ML_mean, L_in_ML_error, lineStyle= None, capsize=5, marker="^", color=light_red) 
+
+    plt.text(0.7, 3.41, "({:04.3f})".format(H_in_HH_mean), fontsize=14, color=strong_green)
+    plt.text(1.7, 3.41, "({:04.3f})".format(M_in_MM_mean), fontsize=14, color=orange)
+    plt.text(2.7, 3.41, "({:04.3f})".format(L_in_LL_mean), fontsize=14, color=strong_red)
+    plt.text(3.7, 3.41, "({:04.3f})".format(H_in_HL_mean), fontsize=14, color=light_green)
+    plt.text(4.7, 3.41, "({:04.3f})".format(L_in_HL_mean), fontsize=14, color=light_red)
+    plt.text(5.7, 3.41, "({:04.3f})".format(H_in_HM_mean), fontsize=14, color=light_green)
+    plt.text(6.7, 3.41, "({:04.3f})".format(M_in_HM_mean), fontsize=14, color=orange)
+    plt.text(7.7, 3.41, "({:04.3f})".format(M_in_ML_mean), fontsize=14, color=orange)
+    plt.text(8.7, 3.41, "({:04.3f})".format(L_in_ML_mean), fontsize=14, color=light_red)
+
+    # set ticks label
+    ax.set_xticks(range(1,10))
+    ax.set_xticklabels(('H in HH', 'M in MM', 'L in LL', 'H in HL', 'L in HL', 'H in HM', 'M in HM', 'M in ML', 'L in ML'))
+
+    #set ticks color
+    colors = [strong_green, orange, strong_red, light_green, light_red, light_green, orange, orange, light_red]
+    for xtick, color in zip(ax.get_xticklabels(), colors):
+        xtick.set_color(color)
+
+    plt.ylim([3.4,4.6])
+    plt.xlim([0.5,9.5])
+    plt.show()

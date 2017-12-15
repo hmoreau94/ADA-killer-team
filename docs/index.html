@@ -50,7 +50,7 @@
 		</div><!-- /.container --> 
 	</nav><!-- /.nav-wrp -->
 
-	<section id="home" class="intro-section intro-section-14">
+	<section id="home" class="intro-section intro-section-14" style="border: none">
         <div class="info-wrp vm-item">
             <div class="carousel-widget owl0" id="owl0" data-items="1" data-itemrange="false" data-tdrag="false" data-mdrag="false" data-pdrag="false" data-autoplay="true" data-in="flipInX" data-loop="true" style="opacity: 1;">
 
@@ -63,14 +63,14 @@
             </div>
             <!-- <a href="#concept" class="btn btn-lg mr-t-40 btn-line light">Concept</a> -->
         </div><!-- /.container -->
-        <div class="bg-section bg-cover bg-cc full-wh" data-bg="images/nyc.jpg" style="background-image: url(&quot;images/nyc.jpg&quot;);">
+        <div class="bg-section bg-cover bg-cc full-wh" data-bg="images/nyc3.jpg" style="background-image: url(&quot;images/nyc3.jpg&quot;);">
             <b class="full-wh" style="background-color: rgba(255, 255, 255, 0);" id="particles-js"><canvas class="particles-js-canvas-el" style="width: 100%; height: 100%;" width="3360" height="1798"></canvas></b>
             <!-- BACKGROUND VIDEO -->
             <!-- <a class="videobg" data-property="{videoURL:'dorZ3vag5PI',containment:'.intro-section-14 .bg-section',showControls:true, autoPlay:true, loop:true, vol:50, mute:true, startAt:10, opacity:1, addRaster:true, quality:'default', optimizeDisplay:true}"></a> -->
         </div>
     </section>
 
-	<section class="bg-gray content-section content-section-common" id="concept">
+	<section class="content-section content-section-common" id="concept">
         <div class="container">
             <div class="flex-row">
                 <div class="flex-col-md-12">
@@ -118,56 +118,6 @@
         </div>
     </section>
 
-	<section class="content-section content-section-common" id="concept">
-        <div class="container">
-            <div class="flex-row">
-                <div class="flex-col-md-6 flex-col-md-offset-1 last-md full-visible">
-                    <img src="images/plot1.png" class="img-responsive" alt="" style="margin-top: 20px;">    
-                </div><!-- column -->
-                <div class="flex-col-md-5 flex-cc">
-                    <div class="content">
-                        <h2 class="sm-fs20 animated fadeInDown full-visible" data-animate-in="fadeInDown" style="animation-delay: 0s;">Lorem ipsum</h2>
-                        <p class="title-sub animated fadeInDown full-visible" data-animate-in="fadeInDown" style="animation-delay: 0s;">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer elementum imperdiet elit sed maximus. Mauris tempor nisl vitae quam dictum ultricies.
-                        </p>
-
-                        <hr class="dark mr-tb-30">
-
-                        <div class="feedback-box feedback-box5 animated fadeInUp full-visible" data-animate-in="fadeInUp" style="animation-delay: 0s;">
-                            <div class="person"><img src="images/people.svg" alt="Person" class=""></div>
-                            <div class="feedback">
-                                <p class="text">
-                                    « Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer elementum imperdiet elit sed maximus. Mauris tempor nisl vitae quam dictum ultricies. Vivamus feugiat mi ac justo efficitur sagittis. Curabitur sed consectetur quam. In pharetra arcu ante, ut condimentum lectus sagittis et. Vivamus at vestibulum arcu, a pretium ante. Duis tempor, ipsum a lobortis sollicitudin, nibh urna volutpat justo, in rhoncus metus leo eu nunc. »
-                                </p>
-                                <p class="info">
-                                    <strong class="hd">John Doe</strong>
-                                    <em> | Ecole Polytechnique Federale de Lausanne</em>
-                                </p>
-                            </div>
-                        </div><!-- feedback -->
-                    </div>
-                </div><!-- column -->
-            </div><!-- row -->
-        </div><!-- container -->
-    </section>
-
-	<section class="content-section content-section-common no-border" id="concept">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-
-					<canvas id="myChart"></canvas>
-
-                </div>
-                <div class="col-md-6">
-                	<p class="title-sub">
-						Sed pretium lacus nec sollicitudin fermentum. Proin commodo consequat dolor, non viverra lorem. Aliquam eget elementum dolor. Nam arcu enim, semper a consectetur eu, varius in urna. Suspendisse potenti. Sed nec sollicitudin urna, a maximus libero. Donec non leo diam. Nulla vitae ultrices orci. Praesent pulvinar ex in neque pulvinar, ac ornare mi condimentum. Donec vel eleifend augue. In at tempor enim. Morbi ac libero elit. Proin et diam eleifend, fringilla velit ut, dignissim neque.
-                	</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
 	<!-- Footer section -->
 	<section class="footer-section footer-section-6">
 		<div class="container">
@@ -204,49 +154,6 @@
 
 <!-- JavaScript --> 
 <script async src="js/Chart.min.js"></script>
-<script type="text/javascript">
-var canvas = document.getElementById('myChart');
-var data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-        {
-            label: "My First dataset",
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: "rgba(75,192,192,0.4)",
-            borderColor: "rgba(75,192,192,1)",
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(75,192,192,1)",
-            pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-            pointHoverBorderColor: "rgba(220,220,220,1)",
-            pointHoverBorderWidth: 2,
-            pointRadius: 5,
-            pointHitRadius: 10,
-            data: [65, 59, 80, 0, 56, 55, 40],
-        }
-    ]
-};
-
-var option = {
-	showLines: true
-};
-var myLineChart = Chart.Line(canvas,{
-	data:data,
-  options:option
-});
-
-function adddata(){
-	myLineChart.data.datasets[0].data[7] = 50;
-  myLineChart.data.labels[7] = "test add";
-  myLineChart.update();
-}
-</script>
 <script src="minify/rgen_min.js"></script>
 <script async src="js/rgen.js"></script>
 <script src="js/particles/particles.js"></script>

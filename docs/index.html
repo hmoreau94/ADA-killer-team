@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>ADA | How do reviews shape our experience on amazon?</title>
+	<title>ADA | How do reviews shape our experience on Amazon?</title>
 
 	<!--pageMeta-->
 
@@ -45,10 +45,10 @@
 			
 			<div class="nav vm-item">
 				<ul class="nav-links">
-					<li><a href="#dataset">Dataset exploration</a></li>
 					<li><a href="#detecting">Detecting similar books</a></li>
 					<li><a href="#correlation">Correlation analysis</a></li>
 					<li><a href="#herding">Herding Effect analysis</a></li>
+					<li><a href="#recommandations">Recommandations</a></li>
 				</ul>
 			</div><!-- /.nav --> 
 			
@@ -61,7 +61,7 @@
 
                 <div class="">
                     <div class="item">
-                        <h2 class="main-text">How do reviews shape our experience on amazon?</h2>
+                        <h2 class="main-text">How do reviews shape our experience on Amazon?</h2>
                         <p class="sub-text"><i>Applied Data Analysis @ EPFL</i></p>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
         </div>
     </section>
 
-	<section style="margin-top: 0px; padding-top: 0px;">
+	<section style="margin-top: 0px; padding-top: 0px;" id="detecting">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -204,13 +204,24 @@
 		</div>
 	</section>
 
-    <section class="bg-gray content-section content-section-common" id="concept">
+	<section class="bg-gray" id="correlation">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2>How influenced are we regarding reviews when it comes to buying products</h2>
+					<p>[TO DO]</p>
+				</div>	
+			</div>
+		</div>
+	</section>
+
+    <section class="content-section content-section-common" id="herding">
         <div class="container">
             <div class="flex-row">
                 <div class="flex-col-md-12">
                 	<h2>Preparing the data</h2>
                 	<p class="title-sub">
-                		After matching and gathering many pairs of very similar books and in order to study the effect of a first review over the next ones, a step we had to realise was to find out what was the rating of the first review for each books (amazon possible ratings are 1, 2, 3, 4 and 5). From that first rating we had to determine a way to be able to put each book into a specific category. Having categories such has high first review or low first review allows us to separate our data into different groups that we will be then able to compare throughout the study. Two decision were made to establish the different categories we were willing to use. First we had to decide how many categories we wanted. Deciding the number of category was simply a trade-off between high number of categories to confirm our results with low number of books inside of them (low reliability of each category) and low number of categories to confirm our results but high number of books inside of them (high reliability of each category). We settled for three categories: books with high first review (H), books with medium first review (M) and finally, books with low first review (L).  Now it is good to know which categories we want but the second decision we had to face was which books are we going to put into which category. To answer that question we simply looked at the repartition of the first ratings we had among every books. We saw that most of the books started with a 5 star rating, then an also big proportion started with a 4 stars while we had very low number of books starting with 1, 2 or 3 stars rating. To balance our categories and have enough books in each category (increasing the number of books of each category increases its reliability)  we decided to put books with a 5 star first rating in the first category (high first review), the books with a 4 star first rating  in the second category (medium first review), finally the books with a first rating between 1 and 3 in the last category (low first review).
+                		After matching and gathering many pairs of very similar books and in order to study the effect of a first review over the next ones, a step we had to realise was to find out what was the rating of the first review for each books (Amazon possible ratings are 1, 2, 3, 4 and 5). From that first rating we had to determine a way to be able to put each book into a specific category. Having categories such has high first review or low first review allows us to separate our data into different groups that we will be then able to compare throughout the study. Two decision were made to establish the different categories we were willing to use. First we had to decide how many categories we wanted. Deciding the number of category was simply a trade-off between high number of categories to confirm our results with low number of books inside of them (low reliability of each category) and low number of categories to confirm our results but high number of books inside of them (high reliability of each category). We settled for three categories: books with high first review (H), books with medium first review (M) and finally, books with low first review (L).  Now it is good to know which categories we want but the second decision we had to face was which books are we going to put into which category. To answer that question we simply looked at the repartition of the first ratings we had among every books. We saw that most of the books started with a 5 star rating, then an also big proportion started with a 4 stars while we had very low number of books starting with 1, 2 or 3 stars rating. To balance our categories and have enough books in each category (increasing the number of books of each category increases its reliability)  we decided to put books with a 5 star first rating in the first category (high first review), the books with a 4 star first rating  in the second category (medium first review), finally the books with a first rating between 1 and 3 in the last category (low first review).
                 	</p>
                 	<p class="title-sub">
 						What is interesting in our analysis is to study a pair of very similar books and compare for that specific pair of book what are the ratings after a high first rating compared to the ratings after a low first rating. To do so and once we were able to categorise each book according to their first rating among our 3 categories (high, medium or low), we wanted to spot which pair of books had a book starting with a high first review with another starting with a low first review to be able to compare the following ratings. That is were we created 6 groups of pair of similar books and then compared each group. The groups were as follow: HH for pair of  books both starting with high first rating, MM for pair of  books both starting with medium first rating, LL for pair of 2 books both starting with low first rating, HL for pair of books starting with high and low first rating, HM for pair of books starting with high and medium first rating and ML fir pair of books starting with medium and low first rating. All this different groups allowed us to study and confirm the effect of a first review on a book being high, low or medium. The most interesting and promising group is probably the HL group as it the one where we are supposed to observe a lot of difference between successive ratings as the first rating is very different for each pair of similar books. Other groups such as HH, MM, LL are more here just to confirm our results from the HL group as there is supposed to be no difference in the following ratings on these groups since they start with already a very similar rating. Let’s see if we can confirm these hypotheses with our results in the next part of this study.
@@ -219,6 +230,28 @@
             </div>
         </div>
     </section>
+
+	<section class="bg-gray">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2>Results</h2>
+					<p>[TO DO]</p>
+				</div>	
+			</div>
+		</div>
+	</section>
+
+	<section class="" id="recommandations">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2>Recommandations</h2>
+					<p>[TO DO]</p>
+				</div>	
+			</div>
+		</div>
+	</section>
 
 	<!-- Footer section -->
 	<section class="footer-section footer-section-6">
@@ -291,7 +324,7 @@
 		{
 				curImg: images.length - 1,	// animate propery curImg to number of images
 							roundProps: "curImg",				// only integers so it can be used as an array index
-							repeat: 0,									// repeat 3 times
+							repeat: 3,									// repeat 3 times
 							immediateRender: true,			// load first image automatically
 							ease: Linear.easeNone,			// show every image the same ammount of time
 			onUpdate: function () {

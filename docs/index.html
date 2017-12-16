@@ -128,7 +128,14 @@
                 		&emsp;&emsp; Fortunately for us, in this study we have encountered what we call a “Natural Experiment”. A Natural Experiment in our case, refers simply to the fact that each subject/element concerned by this analysis (the pair of similar books for instance) have a specific first rating and that this first rating is <strong>determined by nature</strong> or by other factors outside the control of this study. We have indeed for each pair of similar books a pseudo random chance that their first rating are both good, or good and bad, or medium and good.  The process governing the assignment of a first rating being good, medium or bad can be arguably considered as a random assignment.
                 	</p>
                 	<div class="text-center" style="margin-bottom: 60px;margin-top: 60px;">
-                		<img src="images/review.jpg" style="width: 70%; border-radius: 10px;box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;" data-toggle="tooltip" title="Example of review on Amazon">
+
+						<div class="spacer s2"></div>
+						<div class="spacer s0" id="trigger1"></div>
+						<div id="imagesequence" class="text-center">
+							<img id="review"/ style="width: 70%; border-radius: 10px;box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;" data-toggle="tooltip" title="Example of review on Amazon">
+						</div>
+						<div class="spacer s2"></div>
+
                 	</div>
                 	<p class="title-sub text-justify">
 						&emsp;&emsp; Now to understand the importance of it and why this is such a great news that our study could be considered as a “Natural Experiment”, let’s take a counter example: <strong>A famous tobacco company</strong>, after selling for many year deadly products, felt bad about what they did and developed a new chewing gum solution that could help people to quit smoking. They want to try their new solution to be able to show to the world their great results and for that they design an experiment in which they compare their new chewing gum with a competitor’s patch solution. In order to do so, they gathered 200 smoking participants: a first group of 100 of these participant wants to quit smoking and they will be trying out the chewing gum while the remaining 100 participants didn’t show any interest in quitting smoking. Therefore, they will be trying the patch solution from the competitor and they will be used to compare the result with the first group at the end of the experiment. For a few weeks the 100 first participant take the chewing gum while the other 100 take the patch solution. 
@@ -373,7 +380,7 @@
         	</div>
 
         	<p class="title-sub text-justify" style="margin-top: 20px;">
-				All this different groups allowed us to study and confirm the effect of a first review on a book being high, low or medium. The most interesting and promising group is probably the HL group as it the one where we are supposed to observe a lot of difference between successive ratings as the first rating is very different for each pair of similar books. Other groups such as HH, MM, LL are more here just to confirm our results from the HL group as there is supposed to be no difference in the following ratings on these groups since they start with already a very similar rating. Let’s see if we can confirm these hypotheses with our results in the next part of this study.
+				&emsp;&emsp; All this different groups allowed us to study and confirm the effect of a first review on a book being high, low or medium. The most interesting and promising group is probably the HL group as it the one where we are supposed to observe a lot of difference between successive ratings as the first rating is very different for each pair of similar books. Other groups such as HH, MM, LL are more here just to confirm our results from the HL group as there is supposed to be no difference in the following ratings on these groups since they start with already a very similar rating. Let’s see if we can confirm these hypotheses with our results in the next part of this study.
         	</p>
         </div>
     </section>
@@ -451,6 +458,44 @@
 <script type="text/javascript" src="scrollmagic/uncompressed/plugins/animation.gsap.js"></script>
 <script type="text/javascript" src="scrollmagic/uncompressed/plugins/debug.addIndicators.js"></script>
 <script type="text/javascript" src="js/tracking.js"></script>
+
+<script>
+	// define images
+	var images1 = [
+		"images/reviews/review1.jpg",
+		"images/reviews/review2.jpg",
+		"images/reviews/review3.jpg",
+		"images/reviews/review4.jpg",
+		"images/reviews/review5.jpg"
+	];
+
+	// TweenMax can tween any property of any object. We use this object to cycle through the array
+	var obj1 = {curImg1: 0};
+
+	// create tween
+	var tween1 = TweenMax.to(obj1, 0.5,
+		{
+				curImg1: images1.length - 1,	// animate propery curImg to number of images
+							roundProps: "curImg1",				// only integers so it can be used as an array index
+							repeat: 0,									// repeat 3 times
+							immediateRender: true,			// load first image automatically
+							ease: Linear.easeNone,			// show every image the same ammount of time
+			onUpdate: function () {
+			$("#review").attr("src", images1[obj1.curImg1]); // set the image source
+			}
+		}
+	);
+
+	// init controller
+	var controller = new ScrollMagic.Controller();
+
+	// build scene
+	var scene = new ScrollMagic.Scene({triggerElement: "#trigger1", duration: 140})
+					.setTween(tween1)
+					// .addIndicators() // add indicators (requires plugin)
+					.addTo(controller);
+</script>
+
 <script>
 	// define images
 	var images = [
@@ -488,13 +533,9 @@
 					.setTween(tween)
 					.addIndicators() // add indicators (requires plugin)
 					.addTo(controller);
-
-	// handle form change
-	$("form.move input[name=duration]:radio").change(function () {
-		scene.duration($(this).val());
-	});
 </script>
 
+<!-- Distribution plot -->
 <script type="text/javascript">
 	var canvas = document.getElementById('myChart');
 var data = {

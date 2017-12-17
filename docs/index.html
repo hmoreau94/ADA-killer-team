@@ -43,7 +43,7 @@
 			color: #1f2229;
 		}
 		.title-sub {
-			font-size: 18px;
+			font-size: 17px;
 		}
 	</style>
 </head>
@@ -219,10 +219,40 @@
                 	<p class="title-sub text-justify">
 						Well as you may have already guessed, the <strong>results are completely biased</strong> by the subject selection process in this case. The smoking company chose, for testing its product, participants that already wanted to quit smoking. Those had from the beginning a higher probability of quitting than those that showed zero interest in doing so. In a “natural experiment”, the selection of participants would have been determined by nature hence be randomised or at least outside the control of the experiment. So a “natural experiment” would have led to more meaningful results and would have guaranteed that the study has not been influenced by subject selection or category assignment. This is what we are happy to have here in this study.
                 	</p>
+
+                	<p class="title-sub text-justify">
+                		It might still be unclear to you how do we plan to have a natural experiment in our investigation. Well as explained previously, books come in different formats. For example think about a book that is proposed in both paperback, hardcover and e-book or even the same book that was published by different companies. Then we will have the same content but different reviews. If we succeed to find two books that are similar then nature will have decided on which reviews each of them will have received and this independently of our project. We will have in such setup two identical book (at least in term of content) and different initial reviews, which is exactly what we need.
+                	</p>
                 </div>
             </div>
         </div>
     </section>
+	
+	<!-- Counter section -->
+	<section class="counter-section counter-section-2 edit-item" data-sandboxid="tmp-rg4nd0">
+		<div class="container z1">
+			<div class="rw eq2 gt30 dark">
+
+				<div class="cl">
+					<div class="count-box count-box2 edit-item" data-sandboxid="tmp-rgZ601">
+						<div class="icon edit-item" data-sandboxid="tmp-rgdnY1"><i class="fa fa-book" data-sandboxid="tmp-rg0ss1"></i></div>
+						<div class="count-wrp"><b class="count">2370585</b></div>
+						<h3 class="edit-item edit-content" data-sandboxid="tmp-rgLDl1">Books</h3>
+					</div><!-- /.count-box -->
+				</div>
+
+				<div class="cl">
+					<div class="count-box count-box2 edit-item" data-sandboxid="tmp-rgZ602">
+						<div class="icon edit-item" data-sandboxid="tmp-rgdnY2"><i class="fa fa-commenting-o" data-sandboxid="tmp-rg0ss2"></i></div>
+						<div class="count-wrp"><b class="count">22507155</b></div>
+						<h3 class="edit-item edit-content" data-sandboxid="tmp-rgLDl2">Reviews</h3>
+					</div><!-- /.count-box -->
+				</div>
+
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+		<div class="full-wh bg-cover bg-cc edit-item" data-bg="images/books.jpg" style="background-image: url(&quot;images/books.jpg&quot;);" data-sandboxid="tmp-rgMbx0"><b class="full-wh overlay edit-item" data-sandboxid="tmp-rgxF60"></b></div>
+	</section><!-- /.counter-section -->
 
 	<section style="margin-top: 0px; padding-top: 0px;" id="detecting">
 		<div class="container">
@@ -234,26 +264,59 @@
 
 			<div class="row">
 				<div class="col-md-8">
-						<h3>1. Using titles to obtain candidate similars</h3>
+						<h3>1. Too many books</h3>
 	                	<p class="title-sub text-justify">
-	                		We need to detect near similar books in this large datasets. To do so we would need to compare each of the attribute of a given book with all the others which is extremely computationaly expensive. There we will use LSH. We need to detect near similar books in this large datasets. To do so we would need to compare each of the attribute of a given book with all the others which is extremely computationaly expensive. There we will use LSH. There we will use LSH. We need to detect near similar books in this large datasets. 
+	                		&emsp;&emsp; Unfortunately, we are working on a very large dataset. We started our project by discarding the books for which we didn’t have enough reviews to study the Herding Effect later on. But this step left us with approximately 625’682 books. And this is quite problematic, let’s consider that we would like to match books based only on their titles. We would need to compare them pairwisely and to check how similar they are. 
 	                	</p>
-	                	<h3>2. Using titles to obtain candidate similars</h3>
 	                	<p class="title-sub text-justify">
-	                		We need to detect near similar books in this large datasets. To do so we would need to compare each of the attribute of a given book with all the others which is extremely computationaly expensive. There we will use LSH. We need to detect near similar books in this large datasets. To do so we would need to compare each of the attribute of a given book with all the others which is extremely computationaly expensive. There we will use LSH. There we will use LSH. We need to detect near similar books in this large datasets.
+							A popular way to compare the similarity of two strings is to use a Mathematical measure called Jaccard Similarity, to put it simply it represents the number of words that are common between the two strings divided by the size of the dictionary used by the two strings. If we had to compute this similarity over all those books we would need to compute it <strong>195,738,669,721 times</strong>. While this number might not be very tangible, the time it takes to compute clearly is : it represents more than <strong>655 days, that is a bit less than 2 years</strong> to run on a consumer grade computer. 
 	                	</p>
-	                	<h3>3. Using titles to obtain candidate similars</h3>
 	                	<p class="title-sub text-justify">
-	                		We need to detect near similar books in this large datasets. To do so we would need to compare each of the attribute of a given book with all the others which is extremely computationaly expensive. There we will use LSH. We need to detect near similar books in this large datasets. To do so we would need to compare each of the attribute of a given book with all the others which is extremely computationaly expensive. There we will use LSH. There we will use LSH. We need to detect near similar books in this large datasets.
+							The goal of the project was to be done in less than a month and therefore this was (slightly) concerning.
 	                	</p>
 				</div>
 				<div class="col-md-4 text-center">
-					<div class="spacer s2"></div>
+					<video autoplay loop style="width: 100%;margin-top: 120px;" name="Books" src="videos/books.mov"></video>
+
+<!-- 					<div class="spacer s2"></div>
 					<div class="spacer s0" id="trigger"></div>
 					<div id="imagesequence" class="text-center">
 						<img id="myimg"/ style="border: 1px solid black;width: 100%"><br>
 					</div>
-					<div class="spacer s2"></div>
+					<div class="spacer s2"></div> -->
+				</div>
+			</div>
+			<hr>
+			<div class="row" style="margin-top: 50px;">
+				<div class="col-md-8">
+					<h3>2. The power of Hashing</h3>
+                	<p class="title-sub text-justify">
+                		&emsp;&emsp; We needed to derive a strategy to be able to compare so many books. We used a technique called <strong>Locality sensitive hashing</strong>. The scope of this article isn’t to example the fascinating maths behind the tools used for the analysis but more to give a high level understanding of our experimental protocol, therefore we will try to highly vulgarize it. 
+                	</p>
+                	<p class="title-sub text-justify">
+                		Suppose that we could color a title based only on the words it contains. Each letter would be associated with a color, a word would have the same color than the mix of colors from its characters, and then a sentence would be itself associated with the mix of colors from the words it contains. Then it would be very likely that two titles with the same color would be similar. 
+                	</p>
+                	<p class="title-sub text-justify">
+                		Locality sensitive hashing works like a coloring scheme. It assigns to each title a given value, the probability that this value is the same for two titles is very high if the titles are similar. Therefore we only need to compute this value for each title and to then compare using any method we want only the titles that have the same value. 
+                	</p>
+                	<p class="title-sub text-justify">
+                		Now let’s talk running time, in order to compute this value for each title it takes about <strong>1 minute and 30 seconds</strong> and it yields 14,524 groups of books that are possibly similars. Those groups span over less than 35,742 books. We have successfully reduced the size of our dataset while keeping all the books that have at least one similar product.
+                	</p>
+				</div>
+				<div class="col-md-4">
+					
+				</div>
+			</div>
+			<hr>
+			<div class="row" style="margin-top: 50px;">
+				<div class="col-md-8">
+					<h3>3. Refining our results using an external API</h3>
+                	<p class="title-sub text-justify">
+                		&emsp;&emsp; Once we have significantly reduced the number of books that we work on it is time to check whether or not those candidate similars are indeed similar or not. In order to achieve such goal we needed to obtain more details concerning each book. The original dataset was particularly poor regarding products metadatas. We didn’t have much information on the books and we therefore decided to use Amazon Product advertising API to obtain such information. Once this was done we obtained strategic details : authors, publisher, ISBN, binding and edition.
+                	</p>
+				</div>
+				<div class="col-md-4">
+					
 				</div>
 			</div>
 		</div>
@@ -551,7 +614,7 @@
 	// build scene
 	var scene = new ScrollMagic.Scene({triggerElement: "#trigger1", duration: 400})
 					.setTween(tween1)
-					.addIndicators() // add indicators (requires plugin)
+					// .addIndicators() // add indicators (requires plugin)
 					.addTo(controller);
 </script>
 
@@ -588,7 +651,7 @@
 	var controller = new ScrollMagic.Controller();
 
 	// build scene
-	var scene = new ScrollMagic.Scene({triggerElement: "#trigger", duration: 800})
+	var scene = new ScrollMagic.Scene({triggerElement: "#trigger", duration: 450})
 					.setTween(tween)
 					.addIndicators() // add indicators (requires plugin)
 					.addTo(controller);

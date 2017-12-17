@@ -335,9 +335,9 @@
                 		Using those we compared each book in the similar books from last step using the authors list of the books. We didn’t want to be too restrictive on the authors because two similar books A and B might not have the exact same authors list for numerous reasons:
 	                	<br>
 	                	<br>
-						&emsp;&emsp;  - one of the authors was forgotten in one of the authors’ list
+						&emsp;&emsp;  <i class="fa fa-question text-ada"></i> one of the authors was forgotten in one of the authors’ list
 						<br>
-						&emsp;&emsp;  - an authors name contained a typo
+						&emsp;&emsp;  <i class="fa fa-pencil text-ada"></i> an authors name contained a typo
 						<br>
 						<br>
 						Hence we had to again think of a strategy. The two lists of authors might have different lengths. We started to “clean” those lists by removing the accents and putting the name to lower cases.
@@ -355,7 +355,7 @@
 		        					<span class="title-sub"><i>
 		        						(John) Doe - Robert West - Martin Vetterli
 		        						<hr>
-		        						john doe - robert west - martin vetterli
+		        						<span data-toggle="tooltip" title="Authors normalised">john doe - robert west - martin vetterli</span>
 		        					</i></span>
 								</div>
 							</div>
@@ -367,7 +367,7 @@
 		        					<span class="title-sub"><i>
 		        						Bob West - John D. Doe
 		        						<hr>
-		        						bob west - john d doe
+		        						<span data-toggle="tooltip" title="Authors normalised">bob west - john d doe</span>
 		        					</i></span>
 								</div>
 							</div>
@@ -378,9 +378,9 @@
 							<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
 								<div class="panel-body" style="padding: 15px;">
 		        					<span class="title-sub"><i>
-		        						<strong>0.28</strong> john doe | john d doe
+		        						<strong data-toggle="tooltip" title="Levenstein distance">0.28</strong> john doe | john d doe
 		        						<hr>
-		        						<strong>0.35</strong> robert west | bob west 
+		        						<strong data-toggle="tooltip" title="Levenstein distance">0.35</strong> robert west | bob west 
 		        					</i></span>
 								</div>
 							</div>
@@ -403,18 +403,116 @@
 
 			<hr>
 			<div class="row" style="margin-top: 50px;">
-				<div class="col-md-8">
+				<div class="col-md-12">
 					<h3>4. Final Filtering, coming back to titles</h3>
                 	<p class="title-sub text-justify">
-                		&emsp;&emsp; Once we have significantly reduced the number of books that we work on it is time to check whether or not those candidate similars are indeed similar or not. In order to achieve such goal we needed to obtain more details concerning each book. The original dataset was particularly poor regarding products metadatas. We didn’t have much information on the books and we therefore decided to use Amazon Product advertising API to obtain such information. Once this was done we obtained strategic details : authors, publisher, ISBN, binding and edition.
+                		&emsp;&emsp; The last step allowed us to get rid of books with similar titles but that came from different authors. Finally we wish to apply a final filter in order to reduce as much as possible de number of false positive (i.e. books that we declare as matching but are indeed different). In order to be very restrictive, we will consider the titles of the books inside the same similarity bin. The problem that might remain is that even though the book titles are now very similars they might differ by even a small proportion and still be completely different:
+
                 	</p>
                 </div>
-            </div>
+		
+				<div class="col-md-3">
+					<div class="info-box info-box7 edit-item text-ada" data-sandboxid="tmp-rgH720">
+						<div class="img edit-item text-ada" data-sandboxid="tmp-rg0zK0"><i class="fa fa-copy edit-item text-ada" data-sandboxid="tmp-rgobv0" style="color: #304d70"></i></div>
+						<div class="info edit-item" data-sandboxid="tmp-rg4km0">
+							<span class="title-sub" data-sandboxid="tmp-rgevG1">Different Tomes</span>
+						</div>
+					</div>	
+				</div>
 
+				<div class="col-md-3">
+					<div class="info-box info-box7 edit-item" data-sandboxid="tmp-rgH721">
+						<div class="img edit-item" data-sandboxid="tmp-rg0zK1"><i class="fa fa-graduation-cap edit-item" data-sandboxid="tmp-rgobv1" style="color: #304d70"></i></div>
+						<div class="info edit-item" data-sandboxid="tmp-rg4km1">
+							<span class="title-sub" data-sandboxid="tmp-rgevG1">Similar educational books</span>
+						</div>
+					</div>	
+				</div>
+
+				<div class="col-md-3">
+					<div class="info-box info-box7 edit-item" data-sandboxid="tmp-rgH722">
+						<div class="img edit-item" data-sandboxid="tmp-rg0zK2"><i class="fa fa-pencil edit-item" data-sandboxid="tmp-rgobv2" style="color: #304d70"></i></div>
+						<div class="info edit-item" data-sandboxid="tmp-rg4km2">
+							<span class="title-sub" data-sandboxid="tmp-rgevG1">Typos & Small differences</span>
+						</div>
+					</div>	
+				</div>
+
+				<div class="col-md-3">
+					<div class="info-box info-box7 edit-item" data-sandboxid="tmp-rgH723">
+						<div class="img edit-item" data-sandboxid="tmp-rg0zK3"><i class="fa fa-database edit-item" data-sandboxid="tmp-rgobv3" style="color: #304d70"></i></div>
+						<div class="info edit-item" data-sandboxid="tmp-rg4km3">
+							<span class="title-sub" data-sandboxid="tmp-rgevG1">Others</span>
+						</div>
+					</div>	
+				</div>
+
+				<div class="col-md-12">
+                	<p class="title-sub text-justify">
+						Suppose that we have the following similarity bin :
+					</p>
+				</div>
+
+				<div class="col-md-4">
+					<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
+						<div class="panel-body" style="padding: 15px;">
+							<h4 class="text-ada">The Walking Dead: The Fall of the Governor: Part One</h4>
+        					<span class="title-sub"><i>
+        						Robert Kirkman - Jay Bonansinga
+        					</i></span>
+        				</div>
+        			</div>
+				</div>
+				<div class="col-md-4">
+					<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
+						<div class="panel-body" style="padding: 15px;">
+							<h4 class="text-ada">The Walking Dead: The Fall of the Governor: Part Two</h4>
+        					<span class="title-sub"><i>
+        						Robert Kirkman - Jay Bonansinga
+        					</i></span>
+        				</div>
+        			</div>
+				</div>
+				<div class="col-md-4">
+					<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
+						<div class="panel-body" style="padding: 15px;">
+							<h4 class="text-ada">The Walking Dead: The Fall of the Governor: Part One</h4>
+        					<span class="title-sub"><i>
+        						Robert Kirkman
+        					</i></span>
+        				</div>
+        			</div>
+				</div>
+				<div class="col-md-12" style="margin-top: 20px;">
+                	<p class="title-sub text-justify">
+						The algorithm will again normalize the titles by getting rid of the symbols it contains as well as putting them in lower case:
+					</p>
+				</div>
+				<div class="col-md-6 col-md-offset-3">
+					<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
+						<div class="panel-body" style="padding: 15px;">
+							<p class="title-sub" style="margin-bottom: 0px;">the walking dead the fall of the governor part one</h4>
+							<hr>
+							<p class="title-sub" style="margin-bottom: 0px;">the walking dead the fall of the governor part two</h4>
+							<hr>
+							<p class="title-sub" style="margin-bottom: 0px;">the walking dead the fall of the governor part one</h4>
+        				</div>
+        			</div>
+				</div>
+				<div class="col-md-12" style="margin-top: 20px;">
+                	<p class="title-sub text-justify">
+						Then it will consider the set of words of each title and consider two titles to be identical if the symetric difference of such set if empty (meaning that one of the set is entirely contained in the other).
+					</p>
+
+					<p class="title-sub text-justify">
+						&emsp;&emsp; Thanks to all these steps we have now reduced our number of similarity bins down to 3,173. With more time to do the matching we think that we could have applied more filters in order to match books with much more confidence. We have decided to be very restrictive here because of the time constraints but once we obtained the ISBN of different books it would be possible to access a database where titles and author names would be consistent and could therefore match much more efficiently.
+					</p>
+				</div>				
+            </div>
 		</div>
 	</section>
-	
-	<section class="bg-gray other-section other-section-1 edit-item" data-sandboxid="tmp-rgfCv0">
+
+	<section class="bg-gray other-section other-section-1 edit-item" data-sandboxid="tmp-rgfCv0" id="correlationr">
 		<div class="container text-left">
 			<h2 style="color: #1f2229">How influenced are we regarding reviews when it comes to buying products</h2>
 	        <p class="title-sub text-justify" style="color: #1f2229; text-align: justify;">

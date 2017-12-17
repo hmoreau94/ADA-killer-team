@@ -29,6 +29,19 @@
 		.text-ada {
 			color: #304d70;
 		}
+		.other-section-1 ol>li.active {
+    		background-color: white;
+    		border-radius: 5px;
+		}
+		.other-section-1 ol>li.active .iconwrp {
+    		color: #304d70;
+		}
+		.other-section-1 ol>li>i, .other-section-1 ol>li>.iconwrp {
+			color: #304d70;
+		}
+		.other-section-1 ol>li .info {
+			color: #1f2229;
+		}
 	</style>
 </head>
 <body>
@@ -218,17 +231,36 @@
 			</div>
 		</div>
 	</section>
-
-	<section class="bg-gray" id="correlation">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<h2>How influenced are we regarding reviews when it comes to buying products</h2>
-					<p>[TO DO]</p>
-				</div>	
+	
+	<section class="bg-gray other-section other-section-1 edit-item" data-sandboxid="tmp-rgfCv0">
+		<div class="container text-left">
+			<h2 style="color: #1f2229">How influenced are we regarding reviews when it comes to buying products</h2>
+	        <p class="title-sub text-justify" style="color: #1f2229; text-align: justify;">
+	    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at egestas metus. Phasellus dapibus, quam et pulvinar venenatis, risus orci pellentesque ipsum, vel egestas odio nibh ac lacus. Sed elementum lorem id elit accumsan, at finibus neque ultrices. Nam vehicula tortor vitae arcu pretium volutpat. Cras tincidunt iaculis metus, ac gravida erat suscipit dictum.
+	    	</p>
+			<div class="row eqh">
+				<div class="col-md-5 l">
+					<ol>
+						<li class="active edit-item" data-img="images/correlations/correlation1.png" data-sandboxid="tmp-rgoSe0">
+							<div class="iconwrp edit-item" data-sandboxid="tmp-rgHXd0"><i class="fa fa-trophy edit-item text-ada" data-sandboxid="tmp-rgGnR0"></i></div>
+							<p class="info edit-item edit-content" data-sandboxid="tmp-rgBuU1" style="color: #1f2229">Sales Rank</p>
+						</li>
+						<li data-img="images/correlations/correlation2.png" class="edit-item" data-sandboxid="tmp-rgoSe1">
+							<div class="iconwrp edit-item" data-sandboxid="tmp-rgHXd1"><i class="fa fa-line-chart edit-item" data-sandboxid="tmp-rgGnR1"></i></div>
+							<p class="info edit-item edit-content" data-sandboxid="tmp-rgBuU2">Continuous Sales Rank</p>
+						</li>
+					</ol>
+				</div><!-- /.col-md-5 -->
+				<div class="col-md-6 col-md-offset-1 r">
+					<img src="images/correlations/correlation1.png" alt="Image" class="img-responsive vm-item edit-item">
+				</div><!-- /.col-md-6 -->
 			</div>
-		</div>
-	</section>
+
+	        <p class="title-sub text-justify" style="color: #1f2229; text-align: justify;margin-top: 40px;">
+				From these plot we can hardly deduce anything, nevertheless we can go a bit further by trying to guess a ranking based on the review average. Then plot it against the deduced rank to see how it correlates to it. If the sales rank is depending heavily on the review grade then it should have a pearson correlation close to 1.
+			</p>
+		</div><!-- /.container -->
+	</section><!-- /.other-section -->
 
     <section class="content-section content-section-common" id="herding" style="border: none">>
         <div class="container">

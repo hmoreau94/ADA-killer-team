@@ -107,7 +107,7 @@
 					<div class="text-center" style="margin-bottom: 60px;margin-top: 60px;">
 
 						<div id="imagesequence" class="text-center">
-							<img id="review"/ style="width: 70%; border-radius: 10px;box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;" data-toggle="tooltip" title="Example of review on Amazon">
+							<img id="review"/ style="width: 70%; border-radius: 10px;box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;" data-toggle="tooltip">
 						</div>
 						<div class="spacer s2"></div>
                 	</div>
@@ -231,13 +231,21 @@
 	<!-- Counter section -->
 	<section class="counter-section counter-section-2 edit-item" data-sandboxid="tmp-rg4nd0">
 		<div class="container z1">
-			<div class="rw eq2 gt30 dark">
+			<div class="rw eq3 gt30 dark">
 
 				<div class="cl">
 					<div class="count-box count-box2 edit-item" data-sandboxid="tmp-rgZ601">
 						<div class="icon edit-item" data-sandboxid="tmp-rgdnY1"><i class="fa fa-book" data-sandboxid="tmp-rg0ss1"></i></div>
 						<div class="count-wrp"><b class="count">2370585</b></div>
 						<h3 class="edit-item edit-content" data-sandboxid="tmp-rgLDl1">Books</h3>
+					</div><!-- /.count-box -->
+				</div>
+
+				<div class="cl">
+					<div class="count-box count-box2 edit-item" data-sandboxid="tmp-rgZ601">
+						<div class="icon edit-item" data-sandboxid="tmp-rgdnY1"><i class="fa fa-clone" data-sandboxid="tmp-rg0ss1"></i></div>
+						<div class="count-wrp">?</div>
+						<h3 class="edit-item edit-content" data-sandboxid="tmp-rgLDl1">Similars books</h3>
 					</div><!-- /.count-box -->
 				</div>
 
@@ -276,7 +284,7 @@
 	                	</p>
 				</div>
 				<div class="col-md-4 text-center">
-					<video autoplay loop style="width: 100%;margin-top: 120px;" name="Books" src="videos/books.mov"></video>
+					<video autoplay loop style="width: 100%;margin-top: 120px;" name="Books" src="videos/books1.m4v"></video>
 
 <!-- 					<div class="spacer s2"></div>
 					<div class="spacer s0" id="trigger"></div>
@@ -288,7 +296,7 @@
 			</div>
 			<hr>
 			<div class="row" style="margin-top: 50px;">
-				<div class="col-md-8">
+				<div class="col-md-12">
 					<h3>2. The power of Hashing</h3>
                 	<p class="title-sub text-justify">
                 		&emsp;&emsp; We needed to derive a strategy to be able to compare so many books. We used a technique called <strong>Locality sensitive hashing</strong>. The scope of this article isn’t to example the fascinating maths behind the tools used for the analysis but more to give a high level understanding of our experimental protocol, therefore we will try to highly vulgarize it. 
@@ -296,15 +304,19 @@
                 	<p class="title-sub text-justify">
                 		Suppose that we could color a title based only on the words it contains. Each letter would be associated with a color, a word would have the same color than the mix of colors from its characters, and then a sentence would be itself associated with the mix of colors from the words it contains. Then it would be very likely that two titles with the same color would be similar. 
                 	</p>
-                	<p class="title-sub text-justify">
+                	<p class="title-sub text-justify" style="margin-bottom: 0px;">
                 		Locality sensitive hashing works like a coloring scheme. It assigns to each title a given value, the probability that this value is the same for two titles is very high if the titles are similar. Therefore we only need to compute this value for each title and to then compare using any method we want only the titles that have the same value. 
                 	</p>
+                </div>
+				<div class="col-md-6 col-md-offset-3 text-center">
+					<video autoplay loop style="width: 100%;" name="Books" src="videos/books2.m4v"></video>
+				</div>
+				<div class="col-md-12">
                 	<p class="title-sub text-justify">
                 		Now let’s talk running time, in order to compute this value for each title it takes about <strong>1 minute and 30 seconds</strong> and it yields 14,524 groups of books that are possibly similars. Those groups span over less than 35,742 books. We have successfully reduced the size of our dataset while keeping all the books that have at least one similar product.
                 	</p>
 				</div>
 				<div class="col-md-4">
-					
 				</div>
 			</div>
 			<hr>
@@ -653,7 +665,7 @@
 	// build scene
 	var scene = new ScrollMagic.Scene({triggerElement: "#trigger", duration: 450})
 					.setTween(tween)
-					.addIndicators() // add indicators (requires plugin)
+					// .addIndicators() // add indicators (requires plugin)
 					.addTo(controller);
 </script>
 

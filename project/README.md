@@ -1,6 +1,6 @@
 # How do reviews shape our experience on amazon ?
 
-[This document has been reviewed following the first milestone. Last edited 28/11/2017]
+[This document has been reviewed following the first milestone. Last edited 17/12/2017]
 
 # Abstract
 How do reviews shape the experience of users on Amazon? As users of this platform we have experienced ourselves how highly influenced we can be when it comes to reviews. This is mostly a consequence of the amount and diversity of products offered by the plateform. We therefore wondered many things concerning those reviews. 

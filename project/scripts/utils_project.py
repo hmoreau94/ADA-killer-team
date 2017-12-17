@@ -5,75 +5,31 @@ from scripts.amazon_api_interaction import *
 from scripts.analysis import *
 from scripts.data_import import *
 
-
-
-
-def print_details(asin,similars,book_only_candidates):
+def print_details(asins,metadata_df,interesting_cols=['title', 'authors', 'publisher', 'imUrl']):
     """returns the title and authors of all the candidate duplicates of a given asin in similars
 
     @params:
-    - asin : the ASIN of the book for which we want to compare titles
-    - similars : a dictionnary that attributes ASIN to a list of ASIN corresponding to candidate similars 
-    - book_only_candidates : a dataframe containing the information relative to the different ASINs (with authors)
+    - asins : an iterable of asin for which we which to print the details
+    - metadata_df : a dataframe containing the information relative to the different ASINs (with authors)
     """
-    key_entry = book_only_candidates.loc[asin]
-    print("{}\n\t{}".format(key_entry['title'],key_entry['authors']))
-    for sim in similars[asin]:
-        entry = book_only_candidates.loc[sim]
-        title = entry['title']
-        authors = entry['authors']
-        print("{}\n\t{}".format(title,authors))
-    print("--------------------------------------------------------------")
+    metadata_df = metadata_df.reset_index().set_index('asin')
+    for col in interesting_cols:
+        for asin in asins:
+            print('Book {} - {}: {}'.format(asin,col, metadata_df.loc[asin][col]))
+        print()
 
 
-def get_titles(asin,get_candidate,book_desc_titles):
-    """returns the titles of all the candidate duplicates of a given asin in get_candidate
-
-    @params:
-    - asin : the ASIN of the book for which we want to compare titles
-    - get_candidate : a dictionnary that attributes ASIN to a list of ASIN corresponding to candidate similars 
-    - book_desc_titles : a dataframe containing the information relative to the different ASINs
-    """
-    title_desc_list = []
-    book_desc_titles = book_desc_titles.reset_index(drop=True).set_index('asin')
-    title_desc_list.append(book_desc_titles.loc[asin]['title'])
-    for sim in get_candidate[asin]:
-        entry = book_desc_titles.loc[sim]
-        title = entry['title']
-        title_desc_list.append(title)
-    return title_desc_list
-
-def get_desc(asin,get_candidate, book_desc_titles):
-    """returns the description of all the candidate duplicates of a given asin in get_candidate
-
-     @params:
-    - asin : the ASIN of the book for which we want to compare description
-    - get_candidate : a dictionnary that attributes ASIN to a list of ASIN corresponding to candidate similars 
-    - book_desc_titles : a dataframe containing the information relative to the different ASINs
-    """
-    title_desc_list = []
-    book_desc_titles = book_desc_titles.reset_index(drop=True).set_index('asin')
-    title_desc_list.append(book_desc_titles.loc[asin]['description'])
-    for sim in get_candidate[asin]:
-        entry = book_desc_titles.loc[sim]
-        desc = entry['description']
-        title_desc_list.append(desc)
-    return title_desc_list
-
-def display_images(asin,get_candidate, book_desc_titles):
+def display_images(asins, metadata_df):
     """Display the images of the candidate duplicates of a given asin in get_candidate
 
-     @params:
-    - asin : the ASIN of the book for which we want to compare images
-    - get_candidate : a dictionnary that attributes ASIN to a list of ASIN corresponding to candidate similars 
-    - book_desc_titles : a dataframe containing the information relative to the different ASINs
+    @params:
+    - asins : an iterable of asin for which we which to print the details
+    - metadata_df : a dataframe containing the information relative to the different ASINs (with authors)
     """
     url_list = []
-    book_desc_titles = book_desc_titles.reset_index(drop=True).set_index('asin')
-    url_list.append(book_desc_titles.loc[asin]['imUrl'])
-    for sim in get_candidate[asin]:
-        entry = book_desc_titles.loc[sim]
-        url = entry['imUrl']
+    metadata_df = metadata_df.reset_index().set_index('asin')
+    for asin in asins:
+        url = metadata_df.loc[asin]['imUrl']
         url_list.append(url)
     for link in url_list:
         display(Image(url=link,width=250, height=500))

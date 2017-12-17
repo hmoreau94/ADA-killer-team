@@ -1,4 +1,5 @@
-import itertools,sys,os,pickle
+import itertools,sys,os,pickle,copy
+from timeit import default_timer as timer
 
 from IPython.display import Image
 from IPython.core.display import HTML 
@@ -36,6 +37,38 @@ from scripts.utils_project import *
 # =======================================================================================
 #                                     Work on raw data
 # =======================================================================================
+def store_similars(asin1,asin2,similars,asin_2_similarity_list,next_id):
+    """
+    This function will store asin1 and asin2 in the same list and update similars,asin_2_similarity_list,next_id
+    """
+    index1 = asin_2_similarity_list.get(asin1,None)
+    index2 = asin_2_similarity_list.get(asin2,None)
+    if(index1!=None and index2!=None):
+        # First we test if they are not already in the same bin
+        if(index1!=index2):
+            # We already have a similarity list for each asin, therefore we need to merge them
+            # by default we keep p1 and add the list of p2
+            similars[index1].update(similars[index2])
+            # we update the list in which all asins similar to p2 are
+            for asin in similars[index2]:
+                asin_2_similarity_list[asin] = index1
+            # we delete the old list of p2
+            similars.pop(index2)
+    
+    else:
+        idx = index1 if(index1!=None) else index2
+        if(idx==None):
+            # We update the dictionnary that remmembers where each asin has been put
+            similars[next_id] = set([asin1,asin2])
+            asin_2_similarity_list[asin1] = next_id
+            asin_2_similarity_list[asin2] = next_id
+            next_id = next_id + 1
+        else:
+            similars[idx].update([asin1,asin2])
+            asin_2_similarity_list[asin1] = idx
+            asin_2_similarity_list[asin2] = idx
+    return similars,asin_2_similarity_list,next_id
+
 
 def get_shingles(document,n_grams=5):
     """
@@ -88,20 +121,23 @@ def candidate_duplicates(dataframe, dump_path, columns, char_ngram=2, seeds=100,
     - seeds : the number of minhashes that compose a document
     - bands : number of parts that divide each minhash
     """
+    start = timer()  
     description_dump = [c for c in columns]
     description_dump += [str(x) for x in [char_ngram,seeds,bands,hashbytes]]
-    description_dump = "candidate_dup_" + "_".join(description_dump)
-    dump_path = dump_path + description_dump
+    suffix = "_".join(description_dump)
+    dump_path_dup = dump_path + "candidate_dup_" + suffix
+    dump_path_indexing_dict = dump_path + "indexing_dict_" + suffix
 
-    if(os.path.isfile(dump_path)):
+    if(os.path.isfile(dump_path_dup) and os.path.isfile(dump_path_indexing_dict) ):
         # Getting from backup
-        print("Retrieving from : {}".format(dump_path))
-        get_candidate = pickle.load(open(dump_path, "rb"))
-        asin_in_get_candidate = set(get_candidate.keys())
-        for key in get_candidate.keys():
-            asin_in_get_candidate.update(get_candidate[key]) 
-        print("Found {} bins of possible duplicates.\nWith {} different books".format(len(get_candidate),len(list(asin_in_get_candidate))))
-        return get_candidate
+        print("Retrieving from :\n\t{}\n\t".format(dump_path_dup,dump_path_indexing_dict))
+        get_candidate = pickle.load(open(dump_path_dup, "rb"))
+        asin_2_similarity_list = pickle.load(open(dump_path_indexing_dict, "rb"))
+
+        print("Found {} bins of possible duplicates.\nWith {} different books".format(len(get_candidate),len(asin_2_similarity_list)))
+        end = timer()
+        print("It took {} to import the data.".format(human_readible_time(end - start,3)))
+        return get_candidate,asin_2_similarity_list
 
 
     hasher = minhash.MinHasher(seeds=seeds, char_ngram=char_ngram, hashbytes=hashbytes)
@@ -121,27 +157,27 @@ def candidate_duplicates(dataframe, dump_path, columns, char_ngram=2, seeds=100,
             if len(b[bucket_id]) > 1:
                 pairs_ = set(itertools.combinations(b[bucket_id], r=2))
                 candidate_pairs.update(pairs_)
+    
 
     sys.stdout.write('Done...\r')
     sys.stdout.flush()
+    end = timer()
+    print("It took {} to detect duplicates.".format(human_readible_time(end - start,3)))
 
-    similars = []
-    asins_in_similar = set()
-    for p1,p2 in list(candidate_pairs):
-        idx = find_similarity_set([p1,p2],similars)
-        if(idx == -1):
-            similars.append(set([p1,p2]))
-        else:
-            similars[idx].update([p1,p2])
-        asins_in_similar.update([p1,p2])
-    similars = [sorted(list(s)) for s in similars]
-    get_candidate = {elements[0]:elements[1:] for elements in similars}
-    print("Found {} bins of possible duplicates.\nWith {} different books".format(len(get_candidate),len(asins_in_similar)))
+    similars = {}
+    next_id = 0
+    asin_2_similarity_list = {}
+    for asin1,asin2 in list(candidate_pairs):
+        similars,asin_2_similarity_list,next_id = store_similars(asin1,asin2,similars,asin_2_similarity_list,next_id)
+
+    get_candidate = similars
+    print("Found {} bins of possible duplicates.\nWith {} different books".format(len(get_candidate),len(asin_2_similarity_list)))
 
     # Saving to backup
-    pickle.dump(get_candidate, open(dump_path, "wb"))
+    pickle.dump(get_candidate, open(dump_path_dup, "wb"))
+    pickle.dump(asin_2_similarity_list, open(dump_path_indexing_dict, "wb"))
 
-    return get_candidate
+    return get_candidate,asin_2_similarity_list
 
 # =======================================================================================
 #                                     Work on authors
@@ -242,20 +278,7 @@ def check_name_similarity(authors1,authors2,threshold,observational_print=False)
        
     return are_similar
 
-def find_similarity_set(tuple,all_sets):
-    """
-    Check if one of the component of tuple isn't already in the all_sets dictionnary
-
-    @params:
-    - tuple : a pair of ASIN
-    - all_sets : the existing sets of similar books
-    """
-    for i,l in enumerate(all_sets):
-        if(tuple[0] in l or tuple[1] in l):
-            return i
-    return -1
-
-def get_similar_authors(book_only_candidates,get_candidate,threshold=0.35,observational_print=False):
+def get_similar_authors(book_only_candidates,get_candidate,asin_2_similarity_list,threshold=0.35,observational_print=False):
     """
     Looking at the candidate similar in get_candidate it will use the info in the dataframe book_only_candidates
     in order to determine if the authors are similar enough.
@@ -265,22 +288,65 @@ def get_similar_authors(book_only_candidates,get_candidate,threshold=0.35,observ
     - get_candidate : a dictionnary that assigns to a primary ASIN all its candidate similars. It should be constructed 
     such that each book appears only once has a key or a value
     """
-    similars = []
-    for primary in list(get_candidate.keys()):
-        primary_details = book_only_candidates.loc[primary]
-        candidates = get_candidate[primary]
-        for c in candidates:
-            candidate_details = book_only_candidates.loc[c]
-            if(check_details_similarities(primary_details,candidate_details,threshold,observational_print)):
-                idx = find_similarity_set([primary,c],similars)
-                if(idx == -1):
-                    similars.append(set([primary,c]))
-                else:
-                    similars[idx].update([primary,c])
-    similars = [sorted(list(s)) for s in similars]
-    similars = {elements[0]:elements[1:] for elements in similars}
 
-    return similars
+    # We can only work on books that have authors
+    book_only_candidates = book_only_candidates.reset_index()
+    book_only_candidates = book_only_candidates[book_only_candidates['authors'].notnull()]
+    book_only_candidates = book_only_candidates[book_only_candidates['authors'].apply(lambda x:len(x)>0)]
+    book_only_candidates['authors'] = book_only_candidates['authors'].apply(clean_name_in_dataframe)
+
+    compliant_asins = set(book_only_candidates['asin'])
+    all_asins = set(asin_2_similarity_list.keys())
+    non_compliant_asins = all_asins - compliant_asins
+    non_compliant_keys = set()
+    for asin in non_compliant_asins:
+        non_compliant_keys.add(asin_2_similarity_list[asin])
+
+    candidate_compliant = copy.deepcopy(get_candidate)
+    for key,s in get_candidate.items():
+        inter = s & compliant_asins
+        if(len(inter)<1):
+            # the intersection is empty
+            candidate_compliant.pop(key)
+        else:
+            candidate_compliant[key] = inter
+
+    get_candidate = candidate_compliant
+    book_only_candidates = book_only_candidates.reset_index().set_index('asin')
+    lsh_to_author = {}
+    similars = {}
+
+    next_id = 0
+    for key,similarity_bin in get_candidate.items():
+        subsimilars = []
+        details = [book_only_candidates.loc[asin] for asin in similarity_bin]
+        for book1,book2 in itertools.combinations(details, 2):
+            # we compare all the books 2 by 2
+            if(check_details_similarities(book1,book2,threshold,observational_print)):
+                # The two books are similar
+                inserted = False
+                for s in subsimilars:
+                    if((book1.name in s or book2.name in s) and not inserted):
+                        s.update([book1.name,book2.name])
+                        inserted = True
+                if(not inserted):
+                    subsimilars.append(set([book1.name,book2.name]))
+
+        # We have clustered all books with similar authors together inside subsimilars
+        new_ids = []
+        for c in subsimilars:
+            new_ids.append(next_id)
+            similars[next_id] = c
+            next_id = next_id + 1
+
+        # we keep track of where we place the new books after the author filtering
+        lsh_to_author[key] = new_ids
+
+    # we still need to add an empty list to the non_compliant_keys for consistency as they were not conserved after this step
+    for k in non_compliant_keys:
+        lsh_to_author[k] = []
+
+    return similars,lsh_to_author
 
 # =======================================================================================
 #                                     Work on titles
@@ -296,28 +362,44 @@ def get_similar_titles(book_only_candidates,similars,observational_print=False):
     - similars : the correspondance from ASIN to the list of ASIN that are similar
     - Observational_print : can be set to True if once need to see how the method works
     """
-    very_similars = []
-    for primary in list(similars.keys()):
-        p_title = book_only_candidates.loc[primary]['title']
-        candidates = similars[primary]
+    book_only_candidates = book_only_candidates.reset_index().set_index('asin')
+    book_only_candidates['normalized_title'] = book_only_candidates['title'].apply(clean_title)
+    
+    authors_to_title = {}
+    very_similars = {}
+    next_id = 0
 
-        for c in candidates:
-            c_title = book_only_candidates.loc[c]['title']
-            dp,dc = get_difference(p_title,c_title)
+    for key,similarity_bin in similars.items():
+        titles = [[asin,book_only_candidates.loc[asin]['normalized_title']] for asin in similarity_bin]
+        subsimilars = []
+        
+        for pair1,pair2 in itertools.combinations(titles, 2):
+            asin1,book1 = pair1
+            asin2,book2 = pair2
 
-            if(observational_print and len(dp)>0 and len(dc)>0):
+            d1,d2 = get_difference(book1,book2)
+            if(observational_print and len(d1)>0 and len(d2)>0):
                 # Non empty difference, after cleaning the titles are still different
-                print("'{}'\n'{}'\n\t".format(p_title,c_title), colored("--->'{}','{}'".format(dp,dc),'red'))
-            if(len(dp) == 0 and len(dc) == 0):
-                # Insert the match in our list
-                idx = find_similarity_set([primary,c],very_similars)
-                if(idx == -1):
-                    very_similars.append(set([primary,c]))
-                else:
-                    very_similars[idx].update([primary,c])
-    very_similars = [sorted(list(s)) for s in very_similars]
-    very_similars = {elements[0]:elements[1:] for elements in very_similars}
-    return very_similars
+                print("'{}'\n'{}'\n\t".format(book1,book2), colored("--->'{}','{}'".format(d1,d2),'red'))
+            if(len(d1) == 0 and len(d2) == 0):
+                inserted = False
+                for s in subsimilars:
+                    if((asin1 in s or asin2 in s) and not inserted):
+                        s.update([asin1,asin2])
+                        inserted = True
+                if(not inserted):
+                    subsimilars.append(set([asin1,asin2]))
+
+        # We have clustered all books with similar authors together inside subsimilars
+        new_ids = []
+        for c in subsimilars:
+            new_ids.append(next_id)
+            very_similars[next_id] = c
+            next_id = next_id + 1
+
+        # we keep track of where we place the new books after the author filtering
+        authors_to_title[key] = new_ids
+    return very_similars,authors_to_title
 
 def clean_title(x):
     """Will clean the titles
@@ -345,8 +427,10 @@ def get_difference(s1,s2):
     - s1,s2 : the two strings that we wish to compare
     
     """
-    d1 = set([w for w in s1.split() if w not in s2])
-    d2 = set([w for w in s2.split() if w not in s1])
+    words_1 = set(s1.split())
+    words_2 = set(s2.split())
+    d1 = set([w for w in words_1 if w not in words_2])
+    d2 = set([w for w in words_2 if w not in words_1])
     return " ".join(d1)," ".join(d2)
 
 

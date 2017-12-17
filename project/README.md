@@ -2,6 +2,8 @@
 
 [This document has been reviewed following the first milestone. Last edited 17/12/2017]
 
+> This project gave birth to a data story that can be found on [data-analytics.science/](http://data-analytics.science/). This website doesn't aim at explaining all details that came in the making of the project but rather to allow a non expert reader to understand the results and the different steps that were considered to come to such.
+
 # Abstract
 How do reviews shape the experience of users on Amazon? As users of this platform we have experienced ourselves how highly influenced we can be when it comes to reviews. This is mostly a consequence of the amount and diversity of products offered by the plateform. We therefore wondered many things concerning those reviews. 
 
@@ -43,14 +45,17 @@ We decided to use first all the data available from the amazon dataset. Then bec
 # Running
 Running the notebooks will highlight which import must be perform and display in the body of the ```Import Error``` how those can be installed (using ```pip``` when possible). 
 
-Also because a lot of tasks (specially the one that required to go over the full JSON) were very long and the results were serialized when it was possible to avoid computationally heavy piece of code. Because those files were too heavy with the dataset to be included in the repo, one can download them from our Google Drive [here](https://drive.google.com/drive/folders/1ga2bre3K30J4ziP6Adl6n8e-0kooNPV7?usp=sharing). **Because of the significant size of the datasets we strongly advise someone that would like to reproduce our work to only download ```Project-Data/dump/```**. 
+Also because a lot of tasks (specially the one that required to go over the full JSON) were very long and the results were serialized when it was possible to avoid computationally heavy piece of code. Because those files were too heavy with the dataset to be included in the repo, one can download them from our Google Drive [here](https://drive.google.com/open?id=1ga2bre3K30J4ziP6Adl6n8e-0kooNPV7). **Because of the significant size of the datasets we strongly advise someone that would like to reproduce our work to only download ```Project-Data/dump/```**. 
 
 The location of this folder can be modified in the notebook by updating the constant ```DATA_FOLDER``` (by default it points toward ```"../../Project-Data/"```)
 
 # Architecture
 We decided to modularize the code as much as possible to improve readability and further refinement of the ressearch. Here you will find the description of our architecture :
 
-* ```Ressearch.ipynb``` : this contains the step by step explanation of our ressearch protocol for the exploratory phase. From data exploration, to methods used to perform similarity study. Then it will show the Herding Effect analysis.
+* ```Final.ipynb``` : this jupyter notebook contains the synthesis of the work up to milestone 3. As opposed to ```Ressearch.ipynb``` it only highlights the key steps and findings.
+* ```Ressearch.ipynb``` : this contains all the work that was done up to Milestone 2. Not all of it is up to date but we wanted to leave it in the repo as it allows anyone to see how we started to conduct our analysis.
+* ```demo/```: contains the dumps of the dataset that is used in order to show how long it would take to compare each book pairwise without the use of LSH.
+* ```assets/```: contains images used to support our claims in the final notebook
 * ```scripts/```: contains all the files that are used in the notebook, with relevant names 	
 	- ```amazon_api_interaction.py```: all the functions used to interact with the API and get the details that are not in the original dataset
 	- ```data_import.py```: functions used to read the large JSON of the original dataset and import it in dataframes.
@@ -58,9 +63,23 @@ We decided to modularize the code as much as possible to improve readability and
 	- ```utils.py```: functions used mainly for details purposes (printing time, printing the details of books : titles, description, images and also to display the progress of the code)
 	- ```analysis.py```: methods used to realize the herding effect analysis.
 	- ```__init.py__```: used to be able to tell to python that this folder contains modules that can be imported (it is actually an empty file)
-* ```analysis_data/```: contains the serialized version of the data used to conduct the analysis of the correlation between price/sales rank and reviews but also for the analysis of the herding effect
+* ```analysis_data/```: contains the serialized version of the dataset that later allowed to conduct the analysis
 
 *  ```report/```: for now it is simply the empty shell of a potential report that could be used to later synthesise our work.
 
+# Work Repartition
+Given the nature of such project we would like to mention that everyone worked on every single part but since we were asked to give distinct roles on each part of the project here is an attempt of a high level view of the work repartition:
+
+- _Guillaume Raille_: Herding Effect analysis on the similar books
+- _Simon Favre_: Correlation analysis and Data Story Website design 
+- _Hugo Moreau_: Crawling of the data, Detection of similar books and correction on the correlation analysis following milestone 2
+
+Everyone took part in the problem formulation. We then all participated in the building of the final data story, to provide meaningfull reporting of our results. All of us will also work on the presentation in order to obtain a comprehensive overview of the project.
+
 # References
-This ressearch was inspired by _"When Sheep Shop: Measuring Herding Effects in Product Ratings with Natural Experiments" by Anonymous Author(s)_ (provided by Pr. Robert West)
+This ressearch was inspired by _"When Sheep Shop: Measuring Herding Effects in Product Ratings with Natural Experiments" by Anonymous Author(s)_ (provided by Pr. Robert West and for which a [blog article](https://dlab.epfl.ch/2017-08-30-of-sheep-and-beer/) has been created). 
+
+We would also like to mention that the original dataset was provided by J. McAuley (as displayed [here](http://jmcauley.ucsd.edu/data/amazon/links.html)). They also used the data in the two following papers :
+
+- R. He, J. McAuley. Modeling the visual evolution of fashion trends with one-class collaborative filtering. WWW, 2016
+- J. McAuley, C. Targett, J. Shi, A. van den Hengel. Image-based recommendations on styles and substitutes. SIGIR, 2015

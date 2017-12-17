@@ -273,6 +273,9 @@ def check_name_similarity(authors1,authors2,threshold,observational_print=False)
     # provide an exhaustive list of all authors)
     mean_score = np.mean([score for _,_,score in matched])
     are_similar = mean_score <= threshold
+    if(observational_print):
+        for e in matched:
+            print(e)
     if(observational_print and not are_similar and mean_score <= threshold*(1.25)):
         print("Not similar : {}".format(matched))
        

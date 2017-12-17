@@ -321,16 +321,96 @@
 			</div>
 			<hr>
 			<div class="row" style="margin-top: 50px;">
-				<div class="col-md-8">
+				<div class="col-md-12">
 					<h3>3. Refining our results using an external API</h3>
                 	<p class="title-sub text-justify">
                 		&emsp;&emsp; Once we have significantly reduced the number of books that we work on it is time to check whether or not those candidate similars are indeed similar or not. In order to achieve such goal we needed to obtain more details concerning each book. The original dataset was particularly poor regarding products metadatas. We didn’t have much information on the books and we therefore decided to use Amazon Product advertising API to obtain such information. Once this was done we obtained strategic details : authors, publisher, ISBN, binding and edition.
                 	</p>
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+                	<p class="title-sub text-justify">
+                		Using those we compared each book in the similar books from last step using the authors list of the books. We didn’t want to be too restrictive on the authors because two similar books A and B might not have the exact same authors list for numerous reasons:
+	                	<br>
+	                	<br>
+						&emsp;&emsp;  - one of the authors was forgotten in one of the authors’ list
+						<br>
+						&emsp;&emsp;  - an authors name contained a typo
+						<br>
+						<br>
+						Hence we had to again think of a strategy. The two lists of authors might have different lengths. We started to “clean” those lists by removing the accents and putting the name to lower cases.
+						<br>
+						<br>
+						Then we used what is called the relative <strong>Levenstein distance</strong>. This metric compute the proportion of the longuest string’s charachters that we have to modify (or delete) in order to obtain the shortest one.
+					</p>
+				</div>
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
+								<div class="panel-body" style="padding: 15px;">
+									<h3 class="text-ada">Book A</h3>
+		        					<span class="title-sub"><i>
+		        						(John) Doe - Robert West - Martin Vetterli
+		        						<hr>
+		        						john doe - robert west - martin vetterli
+		        					</i></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
+								<div class="panel-body" style="padding: 15px;">
+									<h3 class="text-ada">Book B</h3>
+		        					<span class="title-sub"><i>
+		        						Bob West - John D. Doe
+		        						<hr>
+		        						bob west - john d doe
+		        					</i></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
+								<div class="panel-body" style="padding: 15px;">
+		        					<span class="title-sub"><i>
+		        						<strong>0.28</strong> john doe | john d doe
+		        						<hr>
+		        						<strong>0.35</strong> robert west | bob west 
+		        					</i></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+			<div class="row">
+				<div class="col-md-12">
+                	<p class="title-sub text-justify">
+						Then it will compute the distance between the two lists as the mean of the distance between the matched authors : <strong>0.315</strong> and will decide that the two are identical if this distance is lower than a threshold that we optimised empirically.
+						Using this method we <strong>reduced the number of groups of candidate similars to 5,882</strong>. 
+                	</p>
+
 				</div>
 				<div class="col-md-4">
 					
 				</div>
 			</div>
+
+			<hr>
+			<div class="row" style="margin-top: 50px;">
+				<div class="col-md-8">
+					<h3>4. Final Filtering, coming back to titles</h3>
+                	<p class="title-sub text-justify">
+                		&emsp;&emsp; Once we have significantly reduced the number of books that we work on it is time to check whether or not those candidate similars are indeed similar or not. In order to achieve such goal we needed to obtain more details concerning each book. The original dataset was particularly poor regarding products metadatas. We didn’t have much information on the books and we therefore decided to use Amazon Product advertising API to obtain such information. Once this was done we obtained strategic details : authors, publisher, ISBN, binding and edition.
+                	</p>
+                </div>
+            </div>
+
 		</div>
 	</section>
 	
@@ -338,7 +418,7 @@
 		<div class="container text-left">
 			<h2 style="color: #1f2229">How influenced are we regarding reviews when it comes to buying products</h2>
 	        <p class="title-sub text-justify" style="color: #1f2229; text-align: justify;">
-	    		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at egestas metus. Phasellus dapibus, quam et pulvinar venenatis, risus orci pellentesque ipsum, vel egestas odio nibh ac lacus. Sed elementum lorem id elit accumsan, at finibus neque ultrices. Nam vehicula tortor vitae arcu pretium volutpat. Cras tincidunt iaculis metus, ac gravida erat suscipit dictum.
+	    		From these plot we can hardly deduce anything, nevertheless we can go a bit further by trying to guess a ranking based on the review average. Then plot it against the deduced rank to see how it correlates to it. If the sales rank is depending heavily on the review grade then it should have a pearson correlation close to 1.
 	    	</p>
 			<div class="row eqh">
 				<div class="col-md-5 l">
@@ -357,10 +437,6 @@
 					<img src="images/correlations/correlation1.png" alt="Image" class="img-responsive vm-item edit-item">
 				</div><!-- /.col-md-6 -->
 			</div>
-
-	        <p class="title-sub text-justify" style="color: #1f2229; text-align: justify;margin-top: 40px;">
-				From these plot we can hardly deduce anything, nevertheless we can go a bit further by trying to guess a ranking based on the review average. Then plot it against the deduced rank to see how it correlates to it. If the sales rank is depending heavily on the review grade then it should have a pearson correlation close to 1.
-			</p>
 		</div><!-- /.container -->
 	</section><!-- /.other-section -->
 

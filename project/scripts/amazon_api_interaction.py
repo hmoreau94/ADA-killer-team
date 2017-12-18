@@ -66,7 +66,7 @@ def get_details(x,name_feature,details_dict):
     else:
         return np.nan
 
-def fill_in_with_details(book_desc_titles,amazon_access_file_path,candidate_dict,dump_path):
+def fill_in_with_details(book_desc_titles,amazon_access_file_path,candidate_dict,asin_2_similarity_list,dump_path):
     """
     Will return the extra details that can be fetched fromn the amazon API for all the rows in book_desc_titles.
     It will not call the API if there is already a dump of this operation (to avoid calling it too often)
@@ -74,7 +74,7 @@ def fill_in_with_details(book_desc_titles,amazon_access_file_path,candidate_dict
     @params:
     - book_desc_titles : a dataframe which contains all books of interest with the information we decided to keep from the dataset after the first import.
     - amazon_access_file_path : the path to a pickled version of the amazon access credition
-    - candidate_dict : a dictionnaery associating book asins to a list of asins which books are candidate similars
+    - candidate_dict : a dictionnary associating book asins to a list of asins which books are candidate similars
     - dump_path : the path to the folder where the dump should be saved
     """
 
@@ -91,13 +91,9 @@ def fill_in_with_details(book_desc_titles,amazon_access_file_path,candidate_dict
             end = timer()
             print("It took {} to get the data.".format(human_readible_time(end - start,3)))
             return df,failed_list
-    
-    asin_in_get_candidate = set(candidate_dict.keys())
-    for key in candidate_dict.keys():
-        asin_in_get_candidate.update(candidate_dict[key]) 
-    asin_in_get_candidate=list(asin_in_get_candidate)
 
-    total_entries = len(list(asin_in_get_candidate))
+    total_entries = len(asin_2_similarity_list)
+    asin_in_get_candidate = list(asin_2_similarity_list.keys())
     print("We have {} different asins in our candidate duplicates dictionnary.".format(total_entries))
 
     Access_key_ID,Secret_access_key,Associat_tag = pickle.load(open(amazon_access_file_path, "rb"))
@@ -105,17 +101,17 @@ def fill_in_with_details(book_desc_titles,amazon_access_file_path,candidate_dict
     retriever_amz = (lambda x: retriever_amazon(x,amazon,100))
     
     # We create a dataframe that only contains those products
-    book_desc_titles = book_desc_titles.reset_index(drop='True')
+    book_desc_titles = book_desc_titles.reset_index()
     book_only_candidates = book_desc_titles[book_desc_titles['asin'].isin(asin_in_get_candidate)]
 
     details_dict = {}
     failed = []
     error_count = 0
-    upper_bound = math.ceil(len(asin_in_get_candidate)/10)
+    upper_bound = math.ceil(total_entries/10)
     for i in range(0,upper_bound):
         # We retrieve the asins 10 by 10
         low = 10*i
-        high = (10*i+9) if (10*i+9) < len(asin_in_get_candidate) else len(asin_in_get_candidate)
+        high = (10*i+9) if (10*i+9) < total_entries else total_entries-1
         asins = ",".join(asin_in_get_candidate[low:high+1])
         failed_asin,asin2details = retriever_amz(asins) 
 

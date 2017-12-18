@@ -49,6 +49,9 @@
 		.title-sub {
 			font-size: 17px;
 		}
+		.footer-section-6 img:hover {
+			opacity: 1;
+		}
 	</style>
 </head>
 <body>
@@ -757,8 +760,60 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>Recommendations</h2>
-					<p>[TO DO]</p>
+
+					<div class="row">
+						 <div class="col-md-9">
+							<h2>Recommendations</h2>
+
+							<p class="title-sub text-justify">
+								&emsp;&emsp; We have seen that the effect is actually quite noticeable at least on the short term, a single first rating can influence the following ones and therefore customers could base their choices on biased indicators. When we tried to look at the way Amazon manages such reviews we witnessed how careful they are with this sensible data. 
+							</p>
+							<p class="title-sub text-justify">
+								First of all, the platform doesn’t display directly on the product page all the reviews that have been submitted for this given product. It choses to only display "Top Customer reviews" that are made of at most 8 reviews (depending on the length of such reviews). We tried to identify a pattern to understand how the website chose such reviews but time only allowed us to conduct an empirical ressearch. The only pattern that was identified is that first reviews to be displayed are those of the Verified purchaser, that is the reviews that have been sent after a purchase of the product at a price that is available for a majority of the community.  
+							</p>
+							<p class="title-sub text-justify">
+								This might seem a bit strange … But indeed, Amazon has elaborated a strategy to ensure that reviews are unbiased and trustful. It has created in 2016 the <a class="btn-link" target="_blank" href="https://www.amazon.com/gp/vine/help">Vine Program</a>. This program proposes to trusted reviewers (based on their reviewer ranks) to receive free products (or important discounts) in exchange for their honest review. In fact, before the creation of this program, many vendors used incentivized reviewers in order to kickstart the sales of their product but after an article from <a class="btn-link" target="_blank" href="https://reviewmeta.com/blog/analysis-of-7-million-amazon-reviews-customers-who-receive-free-or-discounted-item-much-more-likely-to-write-positive-review/">Reviewmeta</a>  showing how those reviews were highly biased, the platform decided to severelly punish vendors that used such method.
+							</p>	 	
+						 </div>
+						 <div class="col-md-3">
+						 	<img src="images/reviews.png" style="margin-top:25px; width: 100%; border: 1px solid #ddd;border-radius: 5px;box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
+						 </div>
+					</div>
+        			
+					<p class="title-sub text-justify">
+						Another example of Amazon’s protection against biased reviews is the way they compute their average review grade on the product. The firm doesn’t use the raw average of the past reviews but instead it uses  a machine learned formula that assigns different weights to each reviews depending on many factors such as: the number of reviews of the reviewer, the helpfulness of the review etc.
+					</p>
+
+					<div class="row">
+						<div class="col-md-6">
+							<a target="_blank" href="https://www.amazon.com/Enfants-terribles-Cocteau-Jean/product-reviews/B00E9WMZSU/ref=cm_cr_arp_d_viewopt_sr?ie=UTF8&filterByStar=one_star&reviewerType=all_reviews&pageNumber=1#reviews-filter-bar">
+								<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
+									<div class="panel-body" style="padding: 15px;">
+										<h3 class="text-ada">Les Enfants terribles</h3>
+			        					<span class="title-sub"><i>Displayed: 3.3</i></span>
+			        					<br>
+			        					<span class="title-sub"><i>Computed: 3.71</i></span>
+									</div>
+								</div>	
+							</a>
+						</div>
+						<div class="col-md-6">
+							<a target="_blank" href="https://www.amazon.com/Shakespeare-French-Hamlet-Othello-Macbeth/dp/B00P022SWQ/ref=sr_1_13?s=books&ie=UTF8&qid=1513329797&sr=1-13&keywords=livre&refinements=p_n_feature_nine_browse-bin%3A3291438011%2Cp_72%3A1250224011">
+								<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
+									<div class="panel-body" style="padding: 15px;">
+										<h3 class="text-ada">Shakespeare "French Edition"</h3>
+			        					<span class="title-sub"><i>Displayed: 4.4</i></span>
+			        					<br>
+			        					<span class="title-sub"><i>Computed: 4.34</i></span>
+									</div>
+								</div>	
+							</a>
+						</div>
+					</div>
+
+					<p class="title-sub text-justify" style="margin-top: 20px;">
+						A simple counter measure that we could think off would be to hide the reviews when there are not enough of them. Nevertheless, it is easy to understand that Amazon has commercial incentive to not follow this advice. Intuitively, reviews are very helpful to users and without reviews it becomes difficult for them to get an idea of the quality of the product. As the effect seem to last only for a few reviews, then we can see that amazon’s effort to provide the best assessment of the quality of a product is efficient but customers should however be careful not to rely exclusively on this indicator. Nowadays there exist a plethora of articles online that propose reviews of products and that are written by domain experts and/or journalists that can also be taken into consideration.
+					</p>
 				</div>	
 			</div>
 		</div>
@@ -767,26 +822,27 @@
 	<!-- Footer section -->
 	<section class="footer-section footer-section-6">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-6">
-					<img src="images/dlab.png" alt="Company logo">
-					<p>
-					Hugo Moreau <br>
-					Guillaume Raille <br>
-					Simon Favre <br>
-					</p>
+			<div class="row" style="margin-bottom: 40px;">
+				<div class="col-md-4 text-center">
+					<a href="https://www.linkedin.com/in/hugomoreau/" target="_blank">
+						<img src="images/team/hugo.png" class="img-circle" style="width: 100px; height: auto;">
+						<br>
+						Hugo Moreau	
+					</a>
 				</div>
-				<div class="col-md-6">
-					<div class="newsletter">
-						<h6 class="hd">Requests</h6>
-						<form action="form-data/notify-me.php" class="form-widget" data-formtype="newsletter" data-msgpos="append">
-							<div class="field-group">
-								<input class="form-control" data-label="Email" required data-msg="Please enter email." type="email" name="email" placeholder="Enter your email">
-								<button type="submit" id="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i></button>
-							</div>
-							<div class="msg-wrp"></div>
-						</form> <!-- /form -->
-					</div>
+				<div class="col-md-4 text-center">
+					<a href="https://www.linkedin.com/in/guillaumeraille/" target="_blank">
+						<img src="images/team/guillaume.jpg" class="img-circle" style="width: 100px; height: auto;">
+						<br>
+						Guillaume Raille
+					</a>
+				</div>
+				<div class="col-md-4 text-center">
+					<a href="https://www.linkedin.com/in/simonfavre/" target="_blank">
+						<img src="images/team/simon.png" class="img-circle" style="width: 100px; height: auto;">
+						<br>
+						Simon Favre
+					</a>
 				</div>
 			</div>
 			<hr>
@@ -849,45 +905,6 @@
 	// build scene
 	var scene = new ScrollMagic.Scene({triggerElement: "#trigger1", duration: 400})
 					.setTween(tween1)
-					// .addIndicators() // add indicators (requires plugin)
-					.addTo(controller);
-</script>
-
-<script>
-	// define images
-	var images = [
-		"images/test/example_imagesequence_01.png",
-		"images/test/example_imagesequence_02.png",
-		"images/test/example_imagesequence_03.png",
-		"images/test/example_imagesequence_04.png",
-		"images/test/example_imagesequence_05.png",
-		"images/test/example_imagesequence_06.png",
-		"images/test/example_imagesequence_07.png"
-	];
-
-	// TweenMax can tween any property of any object. We use this object to cycle through the array
-	var obj = {curImg: 0};
-
-	// create tween
-	var tween = TweenMax.to(obj, 0.5,
-		{
-				curImg: images.length - 1,	// animate propery curImg to number of images
-							roundProps: "curImg",				// only integers so it can be used as an array index
-							repeat: 0,									// repeat 3 times
-							immediateRender: true,			// load first image automatically
-							ease: Linear.easeNone,			// show every image the same ammount of time
-			onUpdate: function () {
-			$("#myimg").attr("src", images[obj.curImg]); // set the image source
-			}
-		}
-	);
-
-	// init controller
-	var controller = new ScrollMagic.Controller();
-
-	// build scene
-	var scene = new ScrollMagic.Scene({triggerElement: "#trigger", duration: 450})
-					.setTween(tween)
 					// .addIndicators() // add indicators (requires plugin)
 					.addTo(controller);
 </script>

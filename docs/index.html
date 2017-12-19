@@ -84,9 +84,10 @@
 			
 			<div class="nav vm-item">
 				<ul class="nav-links">
+                    <li><a href="#natural">Natural experiment</a></li>
 					<li><a href="#detecting">Detecting similar books</a></li>
-					<li><a href="#correlation">Correlation analysis</a></li>
-					<li><a href="#herding">Herding Effect analysis</a></li>
+					<li><a href="#preparing">Preparing the data</a></li>
+					<li><a href="#results">Results</a></li>
 					<li><a href="#recommendations">Recommendations</a></li>
 				</ul>
 			</div><!-- /.nav --> 
@@ -123,6 +124,7 @@
         </div>
     </section>
 
+    <!-- Introduction section -->
 	<section style="border:none; padding-bottom: 0px;">
 		<div class="container">
 			<div class="row">	
@@ -175,7 +177,7 @@
 		</div>
 	</section>
 
-	<!-- Features -->
+	<!-- Introduction conclusion -->
 	<section class="feature-section feature-section-4 edit-item" data-sandboxid="tmp-rgxAj0" style="margin-top: 0px;padding-top: 50px;">
 		<div class="full-wh w-50 bg-section edit-item" data-sandboxid="tmp-rge8G0"><img src="images/amazon.jpg" class="img-responsive edit-item" alt="Screen image" data-sandboxid="tmp-rg4sa0"></div>
 		<div class="container">
@@ -184,7 +186,7 @@
 					<div class="content edit-item" data-sandboxid="tmp-rgmj10">
 
 						<p class="title-sub edit-item edit-content text-justify">
-							&emsp;&emsp; By reliable we do not plan on detecting fake reviews. We are trying to detect what is called the Herding Effect. This effect is exactly what makes us choose a product according to what our peers have chosen. But also it means that when the previous buyers have reviewed a product it is likely that our review will be influenced by this latter. This is what we will try to investigate in this project by looking at how the first review of a book influences the following ones. 
+                            &emsp;&emsp; By reliable we do not mean detecting fake reviews. We are trying to detect what is called the <strong>Herding Effect</strong>. This effect is exactly what makes us choose a product according to what our peers have chosen. But also it means that when the previous buyers have reviewed a product it is likely that our review will be influenced by this latter. This is what we will try to investigate in this project by looking at <strong>how the first review of a book influences the following ones</strong>. 
 						</p>
 
 						<p class="title-sub edit-item edit-content text-justify" style="margin-bottom: 0px;">
@@ -196,9 +198,10 @@
 				<div class="col-md-6"></div>
 			</div><!-- /.row -->
 		</div><!-- /.container -->
-	</section><!-- /.feature-section -->
-
-    <section class="bg-gray content-section content-section-common" id="concept">
+	</section>
+    
+    <!-- Natural Experiment section -->
+    <section class="bg-gray content-section content-section-common" id="natural">
         <div class="container">
             <div class="flex-row">
                 <div class="flex-col-md-12">
@@ -208,7 +211,7 @@
                 	</p>
 
                 	<p class="title-sub text-justify">
-						&emsp;&emsp; Now to understand its importance and why it is such a great news that our study could be considered as a “Natural Experiment”, let’s take a counter example: <strong>A famous tobacco company</strong>, after selling for many years deadly products, felt bad about what they did and developed a new chewing gum solution that could help people to quit smoking. They wanted to try their new solution to be able to show to the world its great results. For that they designed an experiment in which they compared their new chewing gum with a competitor’s patch solution. In order to do so, they gathered 200 smokers: sampled such that 100 consumers want to quit and therefore will try the chewing gum solution while the hundred others didn't show any interest in stopping and were chosen to try the competitor's solution and to later compare to the first group. For a few weeks the 100 first participants took the chewing gum while the other 100 took the patch solution. 
+						&emsp;&emsp; Now to understand its importance and why it is such a great news that our study could be considered as a “Natural Experiment”, let’s take a counter example: <strong>A famous tobacco company</strong>, after selling for many years deadly products, felt bad about what they did and developed a new chewing gum solution that could help people to quit smoking. They wanted to try their new solution to be able to show to the world its great results. For that they designed an experiment in which they compared their new chewing gum with a competitor’s patch solution. In order to do so, they gathered 200 smokers: sampled such that 100 consumers wanted to quit and therefore tried the chewing gum solution while the hundred others didn't show any interest in stopping and were chosen to try the competitor's solution and to later compare to the first group. For a few weeks the 100 first participants took the chewing gum while the other 100 took the patch solution. 
 					</p>
 					<div class="row" style="margin-bottom: 30px;margin-top: 60px;">
 						<div class="col-md-6">
@@ -243,7 +246,7 @@
 						</div>
 					</div>
                 	<p class="title-sub text-justify">
-					At the end of the experiment, the tobacco company comes with their results. They found out that only 10 participants out of 100 in the first group smoke one or more cigarettes during the whole experiment while in the second group 90 participants out of 100 smoked. By comparing the 2 groups they declared to have obtained outstanding results proving that their product is 9 times more effective than what the competition proposes. Now if we think about it, are those results really trustworthy or did the design of the experiment completely bias its results ? 
+					At the end of the experiment, the tobacco company came with their results. They found out that only 10 participants out of 100 in the first group smoke one or more cigarettes during the whole experiment while in the second group 90 participants out of 100 smoked. By comparing the 2 groups they declared to have obtained outstanding results proving that their product is 9 times more effective than what the competition proposes. Now if we think about it, are those results really trustworthy or did the design of the experiment completely bias its results ? 
 					</p>
 
                 	<p class="title-sub text-justify">
@@ -251,7 +254,7 @@
                 	</p>
 
                 	<p class="title-sub text-justify">
-                		It might still be unclear to you how do we plan to have a natural experiment in our investigation. Well as explained previously, books come in different formats. For example think about a book that is proposed in both paperback, hardcover and e-book or even the same book that was published by different companies. Then we will have the same content but different reviews. If we succeed to find two books that are similar then nature will have decided on which reviews each of them will have received and this independently of our project. We will have in such setup two identical book (at least in term of content) and different initial reviews, which is exactly what we need.
+                		It might still be unclear to you how do we plan to have a natural experiment in our investigation. Well as explained previously, books come in different formats. For example think about a book that is proposed in both paperback, hardcover and e-book or even the same book that was published by different companies. Then we will have the same content but different reviews. If we succeed to find two books that are similar then nature will have decided on which reviews each of them will have received and this independently of our project. We will have in such setup two identical books (at least in term of content) and different initial reviews, which is exactly what we need.
                 	</p>
 
                 	<div class="row">
@@ -330,6 +333,7 @@
 		<div class="full-wh bg-cover bg-cc edit-item" data-bg="images/books.jpg" style="background-image: url(&quot;images/books.jpg&quot;);" data-sandboxid="tmp-rgMbx0"><b class="full-wh overlay edit-item" data-sandboxid="tmp-rgxF60"></b></div>
 	</section><!-- /.counter-section -->
 
+    <!-- Detecting similar books-->
 	<section style="margin-top: 0px; padding-top: 0px;" id="detecting">
 		<div class="container">
 			<div class="row">
@@ -342,10 +346,10 @@
 				<div class="col-md-8">
 						<h3>1. Too many books</h3>
 	                	<p class="title-sub text-justify">
-	                		&emsp;&emsp; Unfortunately, we are working on a very large dataset. We started our project by discarding the books for which we didn’t have enough reviews to study the Herding Effect later on. But this step left us with approximately 625’682 books. And this is quite problematic, let’s consider that we would like to match books based only on their titles. We would need to compare them pairwisely and to check how similar they are. 
+	                		&emsp;&emsp; Unfortunately, we are working on a very large dataset. We started our project by discarding the books for which we didn’t have enough reviews to study the Herding Effect later on. But this step left us with approximately 625’682 books. And this is quite problematic, let’s consider that we would like to match books based only on their titles. We would need to compare them pairwise and to check how similar they are. 
 	                	</p>
 	                	<p class="title-sub text-justify">
-							A popular way to compare the similarity of two strings is to use a Mathematical measure called Jaccard Similarity, to put it simply it represents the number of words that are common between the two strings divided by the size of the dictionary used by the two strings. If we had to compute this similarity over all those books we would need to compute it <strong>195,738,669,721 times</strong>. While this number might not be very tangible, the time it takes to compute clearly is : it represents more than <strong>655 days, that is a bit less than 2 years</strong> to run on a consumer grade computer. 
+							A popular way to compare the similarity of two strings is to use a Mathematical measure called Jaccard Similarity, to put it simply it represents the number of words that are common between the two strings divided by the size of the dictionary used by the two strings. If we had to compute this similarity over all those books we would need to compute it <strong>195,738,669,721 times</strong> (the number of possible pairs of books). While this number might not be very tangible, the time it takes to compute clearly is : it represents more than <strong>655 days, that is a bit less than 2 years</strong> to run on a consumer grade computer. 
 	                	</p>
 	                	<p class="title-sub text-justify">
 							The goal of the project was to be done in less than a month and therefore this was (slightly) concerning.
@@ -367,13 +371,13 @@
 				<div class="col-md-12">
 					<h3>2. The power of Hashing</h3>
                 	<p class="title-sub text-justify">
-                		&emsp;&emsp; We needed to derive a strategy to be able to compare so many books. We used a technique called <strong>Locality sensitive hashing</strong>. The scope of this article isn’t to example the fascinating maths behind the tools used for the analysis but more to give a high level understanding of our experimental protocol, therefore we will try to highly vulgarize it. 
+                		&emsp;&emsp; We needed to derive a strategy to be able to compare so many books. We used a technique called <strong>Locality sensitive hashing</strong>. The scope of this article isn’t to explain the fascinating maths behind the tools used for the analysis but more to give a high level understanding of our experimental protocol, therefore we will try to highly vulgarize it. 
                 	</p>
                 	<p class="title-sub text-justify">
                 		Suppose that we could color a title based only on the words it contains. Each letter would be associated with a color, a word would have the same color than the mix of colors from its characters, and then a sentence would be itself associated with the mix of colors from the words it contains. Then it would be very likely that two titles with the same color would be similar. 
                 	</p>
                 	<p class="title-sub text-justify" style="margin-bottom: 0px;">
-                		Locality sensitive hashing works like a coloring scheme. It assigns to each title a given value, the probability that this value is the same for two titles is very high if the titles are similar. Therefore we only need to compute this value for each title and to then compare using any method we want only the titles that have the same value. 
+                		Locality sensitive hashing works like a coloring scheme. It assigns to each title a given value, the probability that this value is the same for two titles is very high if the titles are similar. Therefore we only need to compute this value for each title. Then once the value is computed we can compare books that have been assigned to the same value. Because this will greatly reduce the number of comparison we will be able to use any method we want to compare those books.
                 	</p>
                 </div>
 				<div class="col-md-6 col-md-offset-3 text-center">
@@ -392,7 +396,7 @@
 				<div class="col-md-12">
 					<h3>3. Refining our results using an external API</h3>
                 	<p class="title-sub text-justify">
-                		&emsp;&emsp; Once we have significantly reduced the number of books that we work on it is time to check whether or not those candidate similars are indeed similar or not. In order to achieve such goal we needed to obtain more details concerning each book. The original dataset was particularly poor regarding products metadatas. We didn’t have much information on the books and we therefore decided to use Amazon Product advertising API to obtain such information. Once this was done we obtained strategic details : authors, publisher, ISBN, binding and edition.
+                		&emsp;&emsp; Once we have significantly reduced the number of books that we work on it is time to check whether or not those candidate similars are indeed similar or not. In order to achieve such goal we needed to obtain more details concerning each book. The original dataset was particularly poor regarding products metadatas. We didn’t have much information on the books and we therefore decided to use a tool provided by the digital seller : Amazon Product advertising API to obtain such information. It allows devellopers to programatically get product information in a formated manner. Once this was done we obtained strategic details : authors, publisher, ISBN, binding and edition.
                 	</p>
 
 				</div>
@@ -400,7 +404,7 @@
 			<div class="row">
 				<div class="col-md-6">
                 	<p class="title-sub text-justify">
-                		Using those we compared each book in the similar books from last step using the authors list of the books. We didn’t want to be too restrictive on the authors because two similar books A and B might not have the exact same authors list for numerous reasons:
+                		Using those we compared each book in what we call "similarity bins" obtained from last step, using the authors list of the books. We didn’t want to be too restrictive on the authors because two similar books A and B might not have the exact same authors list for numerous reasons:
 	                	<br>
 	                	<br>
 						&emsp;&emsp;  <i class="fa fa-question text-ada"></i> one of the authors was forgotten in one of the authors’ list
@@ -411,7 +415,7 @@
 						Hence we had to again think of a strategy. The two lists of authors might have different lengths. We started to “clean” those lists by removing the accents and putting the name to lower cases.
 						<br>
 						<br>
-						Then we used what is called the relative <strong>Levenstein distance</strong>. This metric compute the proportion of the longuest string’s charachters that we have to modify (or delete) in order to obtain the shortest one.
+						Then we used what is called the relative <strong>Levenstein distance</strong>. This metric computes the proportion of the longuest string’s charachters that we have to modify (or delete) in order to obtain the shortest one. This metric was used to identify between the two lists what is the matching of authors that yields the lowest distance (in our example john doe has a lower distance to john d doe than to bob west)
 					</p>
 				</div>
 				<div class="col-md-6">
@@ -421,7 +425,7 @@
 								<div class="panel-body" style="padding: 15px;">
 									<h3 class="text-ada">Book A</h3>
 		        					<span class="title-sub"><i>
-		        						(John) Doe - Robert West - Martin Vetterli
+		        						John Döe - Robert West - Martin Vetterli
 		        						<hr>
 		        						<span data-toggle="tooltip" title="Authors normalised">john doe - robert west - martin vetterli</span>
 		        					</i></span>
@@ -474,7 +478,7 @@
 				<div class="col-md-12">
 					<h3>4. Final Filtering, coming back to titles</h3>
                 	<p class="title-sub text-justify">
-                		&emsp;&emsp; The last step allowed us to get rid of books with similar titles but that came from different authors. Finally we wish to apply a final filter in order to reduce as much as possible de number of false positive (i.e. books that we declare as matching but are indeed different). In order to be very restrictive, we will consider the titles of the books inside the same similarity bin. The problem that might remain is that even though the book titles are now very similars they might differ by even a small proportion and still be completely different:
+                		&emsp;&emsp; The last step allowed us to get rid of books with similar titles but that came from different authors. Finally we wish to apply a final filter in order to reduce as much as possible the number of false positives (i.e. books that we declare as matching but are indeed different). In order to be very restrictive, we will consider the titles of the books inside the same similarity bin. The problem that might remain is that even though the book titles are now very similars they might differ by even a small proportion and still be completely different:
 
                 	</p>
                 </div>
@@ -580,37 +584,12 @@
 		</div>
 	</section>
 
-	<section class="bg-gray other-section other-section-1 edit-item" data-sandboxid="tmp-rgfCv0" id="correlationr">
-		<div class="container text-left">
-			<h2 style="color: #1f2229">How influenced are we regarding reviews when it comes to buying products</h2>
-	        <p class="title-sub text-justify" style="color: #1f2229; text-align: justify;">
-	    		From these plot we can hardly deduce anything, nevertheless we can go a bit further by trying to guess a ranking based on the review average. Then plot it against the deduced rank to see how it correlates to it. If the sales rank is depending heavily on the review grade then it should have a pearson correlation close to 1.
-	    	</p>
-			<div class="row eqh">
-				<div class="col-md-5 l">
-					<ol>
-						<li class="active edit-item" data-img="images/correlations/correlation1.png" data-sandboxid="tmp-rgoSe0">
-							<div class="iconwrp edit-item" data-sandboxid="tmp-rgHXd0"><i class="fa fa-trophy edit-item text-ada" data-sandboxid="tmp-rgGnR0"></i></div>
-							<p class="info edit-item edit-content" data-sandboxid="tmp-rgBuU1">Sales Rank</p>
-						</li>
-						<li data-img="images/correlations/correlation2.png" class="edit-item" data-sandboxid="tmp-rgoSe1">
-							<div class="iconwrp edit-item" data-sandboxid="tmp-rgHXd1"><i class="fa fa-line-chart edit-item text-ada" data-sandboxid="tmp-rgGnR1"></i></div>
-							<p class="info edit-item edit-content" data-sandboxid="tmp-rgBuU2">Continuous Sales Rank</p>
-						</li>
-					</ol>
-				</div><!-- /.col-md-5 -->
-				<div class="col-md-6 col-md-offset-1 r">
-					<img src="images/correlations/correlation1.png" alt="Image" class="img-responsive vm-item edit-item">
-				</div><!-- /.col-md-6 -->
-			</div>
-		</div><!-- /.container -->
-	</section><!-- /.other-section -->
-
-    <section class="content-section content-section-common" id="herding" style="border: none">>
+    <!-- Preparing the data -->
+    <section class="content-section content-section-common" id="preparing" style="border: none">>
         <div class="container">
         	<h2>Preparing the data</h2>
         	<p class="title-sub text-justify">
-        		&emsp;&emsp; After matching and gathering many pairs of very similar books and in order to study the effect of a first review over the next ones, a step we had to realise was to find out what was the rating of the first review for each book (Amazon possible ratings are 1, 2, 3, 4 and 5). From that first rating we had to determine a way to be able to put each book into a specific category. Having categories such has high first review or low first review allows us to <strong>separate our data into different groups</strong> that, we will then be able to compare throughout the study. Two decisions were made  establish the different categories we were willing to use. First we had to decide how many categories we wanted. Deciding the number of categories was simply a trade-off between high number of categories to confirm our results with low numbers of books inside them (low reliability of each category) and low number of categories to confirm our results but high number of books inside each (high reliability of each category). We settled for three categories as follows: 
+        		&emsp;&emsp; After matching and gathering many pairs of very similar books and in order to study the effect of a first review over the next ones, a step we had to realise was to find out what was the rating of the first review for each book (Amazon possible ratings are 1, 2, 3, 4 and 5). From that first rating we had to determine a way to be able to put each book into a specific category. Having categories such has high first review or low first review allows us to <strong>separate our data into different groups</strong>, that we will then be able to compare throughout the study. Two decisions were made to establish the different categories we were willing to use. First we had to decide how many categories we wanted. Deciding the number of categories was simply a trade-off between high number of categories to confirm our results with low numbers of books inside them (low reliability of each category) and low number of categories to confirm our results but high number of books inside each (high reliability of each category). We settled for three categories as follows: 
         	</p>
 
         	<div class="row equal">
@@ -756,12 +735,13 @@
         	</div>
 
         	<p class="title-sub text-justify" style="margin-top: 20px;">
-				&emsp;&emsp; All these different groups allowed us to study and confirm the effect of a first review on a book being high, low or medium. The most interesting and promising group is probably the HL group as it is the one where we are supposed to observe a lot of difference between successive ratings as the first rating is very different for each pair of similar books. Other groups such as HH, MM, LL are more here just to confirm our results from the HL group as there is supposed to be no difference in the following ratings on these groups since they start with already a very similar rating. Let’s see if we can confirm these hypotheses with our results in the next part of this study.
+				&emsp;&emsp; All these different groups allowed us to study and confirm the effect of a first review on a book being high, low or medium. The most interesting and promising group is probably the HL group as it is the one where we are supposed to observe a lot of difference between successive ratings as the first rating is very different for each pair of similar books. Other groups such as HH, MM, LL are here just to confirm our results from the HL group as there should be no difference in the following ratings on these groups since they start with already a very similar rating. Let’s see if we can confirm these hypotheses with our results in the next part of this study.
         	</p>
         </div>
     </section>
 
-	<section class="bg-gray">
+    <!-- Results -->
+	<section class="bg-gray" id="results">
 		<div class="container">
 
 
@@ -778,6 +758,7 @@
 		</div>
 	</section>
 
+    <!-- Recommendations -->
 	<section class="" id="recommendations">
 		<div class="container">
 			<div class="row">
@@ -788,13 +769,13 @@
 							<h2>Recommendations</h2>
 
 							<p class="title-sub text-justify">
-								&emsp;&emsp; We have seen that the effect is actually quite noticeable at least on the short term, a single first rating can influence the following ones and therefore customers could base their choices on biased indicators. When we tried to look at the way Amazon manages such reviews we witnessed how careful they are with this sensible data. 
+								&emsp;&emsp; We have seen that the effect is actually quite noticeable at least on the short term, a single first rating can influence the following ones and therefore customers could base their choices on biased indicators. When we tried to look at the way Amazon manages such reviews we witnessed <strong>how careful they are with this sensible data</strong>. 
 							</p>
 							<p class="title-sub text-justify">
-								First of all, the platform doesn’t display directly on the product page all the reviews that have been submitted for this given product. It choses to only display "Top Customer reviews" that are made of at most 8 reviews (depending on the length of such reviews). We tried to identify a pattern to understand how the website chose such reviews but time only allowed us to conduct an empirical ressearch. The only pattern that was identified is that first reviews to be displayed are those of the Verified purchaser, that is the reviews that have been sent after a purchase of the product at a price that is available for a majority of the community.  
+								First of all, the platform doesn’t display directly on the product page all the reviews that have been submitted for this given product. It choses to only display "Top Customer reviews" that are made of at most 8 reviews (depending on the length of such reviews). We tried to identify a pattern to understand how the website choses such reviews but time only allowed us to conduct an empirical ressearch. The only pattern that was identified is that first reviews to be displayed are those of the <strong>Verified purchaser</strong>, that is the reviews that have been sent after a purchase of the product at a price that is available for a majority of the community.  
 							</p>
 							<p class="title-sub text-justify">
-								This might seem a bit strange … But indeed, Amazon has elaborated a strategy to ensure that reviews are unbiased and trustful. It has created in 2016 the <a class="btn-link" target="_blank" href="https://www.amazon.com/gp/vine/help">Vine Program</a>. This program proposes to trusted reviewers (based on their reviewer ranks) to receive free products (or important discounts) in exchange for their honest review. In fact, before the creation of this program, many vendors used incentivized reviewers in order to kickstart the sales of their product but after an article from <a class="btn-link" target="_blank" href="https://reviewmeta.com/blog/analysis-of-7-million-amazon-reviews-customers-who-receive-free-or-discounted-item-much-more-likely-to-write-positive-review/">Reviewmeta</a>  showing how those reviews were highly biased, the platform decided to severelly punish vendors that used such method.
+								This might seem a bit strange... But indeed, Amazon has elaborated a strategy to ensure that reviews are unbiased and trustful. It has created in 2016 the <a class="btn-link" target="_blank" href="https://www.amazon.com/gp/vine/help">Vine Program</a>. This program proposes to trusted reviewers (based on their reviewer ranks) to receive free products (or important discounts) in exchange for their honest review. In fact, before the creation of this program, many vendors used incentivized reviewers in order to kickstart the sales of their product but after an article from <a class="btn-link" target="_blank" href="https://reviewmeta.com/blog/analysis-of-7-million-amazon-reviews-customers-who-receive-free-or-discounted-item-much-more-likely-to-write-positive-review/">Reviewmeta</a>  showing how those reviews were highly biased, the platform decided to severelly punish vendors that used such method.
 							</p>	 	
 						 </div>
 						 <div class="col-md-3">
@@ -834,7 +815,7 @@
 					</div>
 
 					<p class="title-sub text-justify" style="margin-top: 20px;">
-						A simple counter measure that we could think off would be to hide the reviews when there are not enough of them. Nevertheless, it is easy to understand that Amazon has commercial incentive to not follow this advice. Intuitively, reviews are very helpful to users and without reviews it becomes difficult for them to get an idea of the quality of the product. As the effect seem to last only for a few reviews, then we can see that amazon’s effort to provide the best assessment of the quality of a product is efficient but customers should however be careful not to rely exclusively on this indicator. Nowadays there exist a plethora of articles online that propose reviews of products and that are written by domain experts and/or journalists that can also be taken into consideration.
+						A simple counter measure that we could think off would be to hide the reviews when there are not enough of them. Nevertheless, it is easy to understand that Amazon has commercial incentives to not follow this advice. Intuitively, reviews are very helpful to users and without reviews it becomes difficult for them to get an idea of the quality of the product. As the effect seems to last only for a few reviews, we can see that amazon’s effort to provide the best assessment of the quality of a product is efficient but customers should however be careful not to rely exclusively on this indicator. Nowadays there exist a plethora of articles online that propose reviews of products and that are written by domain experts and/or journalists that can also be taken into consideration.
 					</p>
 				</div>	
 			</div>

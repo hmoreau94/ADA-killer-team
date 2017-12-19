@@ -766,9 +766,10 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h2>Results</h2>
-					<div class="text-center">
-						<img src="images/results/result1.jpeg" width="450">
-						<img src="images/results/result2.jpeg" width="450">
+					<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;background-color: white">
+						<div class="panel-body" style="padding: 15px;">
+						<div id="container" style="min-width: 310px; height: 600px; margin: 0 auto"></div>
+						</div>
 					</div>
 				</div>	
 			</div>
@@ -891,6 +892,96 @@
 <script type="text/javascript" src="scrollmagic/uncompressed/plugins/debug.addIndicators.js"></script>
 <script type="text/javascript" src="js/tracking.js"></script>
 
+
+<!-- HighCharts -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<!-- Format the data -->
+<?php 
+	$H_in_HL = json_decode(file_get_contents('json/H_in_HL_stats.json'), true); 
+	$L_in_HL = json_decode(file_get_contents('json/L_in_HL_stats.json'), true); 
+	foreach ($H_in_HL as $key => $value) {
+		$H_in_HL_mean[$key] = [$key, round($H_in_HL[$key]['mean'], 2)];
+		$H_in_HL_interval[$key] = [$key, round($H_in_HL[$key]['mean']-0.5*$H_in_HL[$key]['interval95'], 2), round($H_in_HL[$key]['mean']+0.5*$H_in_HL[$key]['interval95'], 2)];
+
+		$L_in_HL_mean[$key] = [$key, round($L_in_HL[$key]['mean'], 2)];
+		$L_in_HL_interval[$key] = [$key, round($L_in_HL[$key]['mean']-0.5*$L_in_HL[$key]['interval95'], 2), round($L_in_HL[$key]['mean']+0.5*$L_in_HL[$key]['interval95'], 2)];
+	}
+?>
+<script type="text/javascript">
+	
+var H_in_HL_interval = <?php echo json_encode($H_in_HL_interval) ?>,
+    H_in_HL_mean = <?php echo json_encode($H_in_HL_mean) ?>,
+    L_in_HL_interval = <?php echo json_encode($L_in_HL_interval) ?>,
+    L_in_HL_mean = <?php echo json_encode($L_in_HL_mean) ?>;
+
+Highcharts.chart('container', {
+	title: {
+        text: 'Average Rating following H/L first rating (only 5 and 1 star)'
+    },
+	xAxis: {
+		tickInterval: 1,
+	},
+    yAxis: {
+        title: {
+            text: null
+        },
+		tickInterval: 1,
+		min: 1,
+		max: 5,
+    },
+    plotOptions: {
+    	series: {
+    		marker: {
+    			enabled: false,
+    		}
+    	}
+    },
+    tooltip: {
+        crosshairs: true,
+        shared: true
+    },
+
+    series: [{
+        name: 'Mean H_in_HL',
+        data: H_in_HL_mean,
+        color: '#28B463',
+    },{
+        name: 'Interval H_in_HL',
+        data: H_in_HL_interval,
+        type: 'arearange',
+        lineWidth: 0,
+        linkedTo: ':previous',
+        color: '#28B463',
+        fillOpacity: 0.3,
+        zIndex: 0,
+        marker: {
+            enabled: false
+        }
+    },
+    {
+        name: 'Mean L_in_HL',
+        data: L_in_HL_mean,
+        color: '#E74C3C'
+    },{
+        name: 'Interval L_in_HL',
+        data: L_in_HL_interval,
+        type: 'arearange',
+        lineWidth: 0,
+        linkedTo: ':previous',
+        color: '#E74C3C',
+        fillOpacity: 0.3,
+        zIndex: 0,
+        marker: {
+            enabled: false
+        }
+    }]
+});
+</script>
+
+<!-- ScrollMagic -->
 <script>
 	// define images
 	var images1 = [

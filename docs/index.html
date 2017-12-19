@@ -763,6 +763,8 @@
 
 	<section class="bg-gray">
 		<div class="container">
+
+
 			<div class="row">
 				<div class="col-md-12">
 					<h2>Results</h2>
@@ -898,25 +900,7 @@
 <script src="https://code.highcharts.com/highcharts-more.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-<!-- Format the data -->
-<?php 
-	$H_in_HL = json_decode(file_get_contents('json/H_in_HL_stats.json'), true); 
-	$L_in_HL = json_decode(file_get_contents('json/L_in_HL_stats.json'), true); 
-	foreach ($H_in_HL as $key => $value) {
-		$H_in_HL_mean[$key] = [$key, round($H_in_HL[$key]['mean'], 2)];
-		$H_in_HL_interval[$key] = [$key, round($H_in_HL[$key]['mean']-0.5*$H_in_HL[$key]['interval95'], 2), round($H_in_HL[$key]['mean']+0.5*$H_in_HL[$key]['interval95'], 2)];
-
-		$L_in_HL_mean[$key] = [$key, round($L_in_HL[$key]['mean'], 2)];
-		$L_in_HL_interval[$key] = [$key, round($L_in_HL[$key]['mean']-0.5*$L_in_HL[$key]['interval95'], 2), round($L_in_HL[$key]['mean']+0.5*$L_in_HL[$key]['interval95'], 2)];
-	}
-?>
 <script type="text/javascript">
-	
-var H_in_HL_interval = <?php echo json_encode($H_in_HL_interval) ?>,
-    H_in_HL_mean = <?php echo json_encode($H_in_HL_mean) ?>,
-    L_in_HL_interval = <?php echo json_encode($L_in_HL_interval) ?>,
-    L_in_HL_mean = <?php echo json_encode($L_in_HL_mean) ?>;
-
 Highcharts.chart('container', {
 	title: {
         text: 'Average Rating following H/L first rating (only 5 and 1 star)'
@@ -946,11 +930,11 @@ Highcharts.chart('container', {
 
     series: [{
         name: 'Mean H_in_HL',
-        data: H_in_HL_mean,
+        data: [[0,5],[1,4.12000000000000010658141036401502788066864013671875],[2,4.0800000000000000710542735760100185871124267578125],[3,4],[4,3.970000000000000195399252334027551114559173583984375],[5,3.79000000000000003552713678800500929355621337890625]],
         color: '#28B463',
     },{
         name: 'Interval H_in_HL',
-        data: H_in_HL_interval,
+        data: [[0,5,5],[1,3.95000000000000017763568394002504646778106689453125,4.29000000000000003552713678800500929355621337890625],[2,3.899999999999999911182158029987476766109466552734375,4.2599999999999997868371792719699442386627197265625],[3,3.8300000000000000710542735760100185871124267578125,4.1699999999999999289457264239899814128875732421875],[4,3.79000000000000003552713678800500929355621337890625,4.13999999999999968025576890795491635799407958984375],[5,3.589999999999999857891452847979962825775146484375,3.979999999999999982236431605997495353221893310546875]],
         type: 'arearange',
         lineWidth: 0,
         linkedTo: ':previous',
@@ -963,11 +947,11 @@ Highcharts.chart('container', {
     },
     {
         name: 'Mean L_in_HL',
-        data: L_in_HL_mean,
+        data: [[0,1],[1,3.6699999999999999289457264239899814128875732421875],[2,3.87000000000000010658141036401502788066864013671875],[3,3.660000000000000142108547152020037174224853515625],[4,4.04999999999999982236431605997495353221893310546875],[5,3.87999999999999989341858963598497211933135986328125]],
         color: '#E74C3C'
     },{
         name: 'Interval L_in_HL',
-        data: L_in_HL_interval,
+        data: [[0,1,1],[1,3.470000000000000195399252334027551114559173583984375,3.859999999999999875655021241982467472553253173828125],[2,3.689999999999999946709294817992486059665679931640625,4.05999999999999960920149533194489777088165283203125],[3,3.470000000000000195399252334027551114559173583984375,3.850000000000000088817841970012523233890533447265625],[4,3.87999999999999989341858963598497211933135986328125,4.21999999999999975131004248396493494510650634765625],[5,3.689999999999999946709294817992486059665679931640625,4.05999999999999960920149533194489777088165283203125]],
         type: 'arearange',
         lineWidth: 0,
         linkedTo: ':previous',

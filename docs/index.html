@@ -402,7 +402,7 @@
 					</p>
 				</div>
 				<div class="col-md-6">
-					<div class="row">
+					<div class="row equalize-panel-body">
 						<div class="col-md-6">
 							<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
 								<div class="panel-body" style="padding: 15px;">
@@ -600,7 +600,7 @@
         		&emsp;&emsp; After matching and gathering many pairs of very similar books and in order to study the effect of a first review over the next ones, a step we had to realise was to find out what was the rating of the first review for each book (Amazon possible ratings are 1, 2, 3, 4 and 5). From that first rating we had to determine a way to be able to put each book into a specific category. Having categories such has high first review or low first review allows us to <strong>separate our data into different groups</strong> that, we will then be able to compare throughout the study. Two decisions were made  establish the different categories we were willing to use. First we had to decide how many categories we wanted. Deciding the number of categories was simply a trade-off between high number of categories to confirm our results with low numbers of books inside them (low reliability of each category) and low number of categories to confirm our results but high number of books inside each (high reliability of each category). We settled for three categories as follows: 
         	</p>
 
-        	<div class="row">
+        	<div class="row equalize-panel-body">
         		<div class="col-md-4 text-center">
         			<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
 						<div class="panel-body" style="padding: 15px;">
@@ -642,7 +642,7 @@
         		</div>
         	</div>
 
-        	<div class="row" style="margin-top: 20px;">
+        	<div class="row equalize-panel-body" style="margin-top: 20px;">
         		<div class="col-md-4 text-center">
         			<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
 						<div class="panel-body" style="padding: 15px;">
@@ -691,7 +691,7 @@
 				&emsp;&emsp; What is interesting in our analysis is to study a pair of very similar books and compare for that specific pair of books what are the ratings after a high first rating compared to the ratings after a low first rating. To do so and once we were able to categorise each book according to their first rating among our 3 categories (high, medium or low), we wanted to spot which pair of books had a book starting with a high first review with another starting with a low first review to be able to compare the following ratings. That is where we created 6 groups of pairs of similar books and then compared each group. The groups were as follows: 
 			</p>
 
-        	<div class="row">
+        	<div class="row equalize-panel-body">
         		<div class="col-md-2 text-center">
         			<div class="panel panel-default" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;">
 						<div class="panel-body" style="padding: 15px;">
@@ -877,6 +877,19 @@
 <script type="text/javascript" src="scrollmagic/uncompressed/plugins/animation.gsap.js"></script>
 <script type="text/javascript" src="scrollmagic/uncompressed/plugins/debug.addIndicators.js"></script>
 <script type="text/javascript" src="js/tracking.js"></script>
+
+<!-- Equalize -->
+<script>
+	$(function() {
+		$(".equalize-panel-body").each(function(){
+			var maxHeight = 0;
+			$(this).find(".panel-body").each(function(){
+				if ($(this).height() > maxHeight) { maxHeight = $(this).height(); }
+			});
+			$(this).find(".panel-body").height(maxHeight);
+		});
+	});
+</script>
 
 <script>
 	// define images
